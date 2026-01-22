@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Management - FinFlow</title>
+    <link rel="shortcut icon" href="finflow logo (1).png" />
+    <link rel="stylesheet" href="css/budget.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="finflow logo (1).png" alt="">
+            <span>FinFlow</span>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="dashboad.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="11" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="3" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="11" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="expenses.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M3 8H17" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M7 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span>Expenses</span>
+            </a>
+
+            <a href="budget.html" class="nav-item active">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>Budgets</span>
+            </a>
+
+            <a href="analytics.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 16L7 12L10 15L17 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M17 12V8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Analytics</span>
+            </a>
+
+            <a href="#" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                <span>AI Insights</span>
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span>Profile</span>
+            </a>
+        </nav>
+
+        <a href="index.html" class="nav-item logout">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 14L17 10L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 10H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>Logout</span>
+        </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="search-bar">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="9" r="6" stroke="#9ca3af" stroke-width="1.5"/>
+                    <path d="M13.5 13.5L17 17" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <input type="text" placeholder="Search transactions, budgets...">
+            </div>
+
+            <div class="header-right">
+                <div class="notification">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 3C7.23858 3 5 5.23858 5 8V11L3 14H17L15 11V8C15 5.23858 12.7614 3 10 3Z" stroke="#4b5563" stroke-width="1.5"/>
+                        <path d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14" stroke="#4b5563" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <span class="notification-badge"></span>
+                </div>
+
+                <div class="user-info">
+                    <div class="user-text">
+                        <span class="welcome-text">Welcome back,</span>
+                        <span class="user-name">Opadijo Tameem</span>
+                    </div>
+                    <div class="user-avatar">O</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Budget Management Content -->
+        <div class="budget-content">
+            <div class="page-header">
+                <h1>Budget Management</h1>
+                <p>Plan and track your spending across categories</p>
+            </div>
+
+            <!-- AI Budget Insight Banner -->
+            <div class="ai-insight-banner">
+                <div class="ai-insight-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L14.5 7.5L20 8.5L16 13L17 18.5L12 16L7 18.5L8 13L4 8.5L9.5 7.5L12 2Z" fill="white"/>
+                    </svg>
+                </div>
+                <div class="ai-insight-content">
+                    <h3>AI Budget Insight</h3>
+                    <p>AI suggests reducing food expenses by 15% based on your spending patterns. You're on track to exceed your budget by $50 this month.</p>
+                </div>
+                <button class="close-btn">✕</button>
+            </div>
+
+            <!-- Budget Summary Card -->
+            <div class="budget-summary">
+                <div class="budget-summary-item">
+                    <span class="summary-label">Monthly Budget</span>
+                    <div class="summary-value">
+                        $2350.00
+                        <button class="edit-btn">Edit</button>
+                    </div>
+                </div>
+
+                <div class="budget-summary-item">
+                    <span class="summary-label">Total Spent</span>
+                    <div class="summary-value">$1800.00</div>
+                    <span class="summary-subtitle">of $2350.00 allocated</span>
+                </div>
+
+                <div class="budget-summary-item">
+                    <span class="summary-label">Remaining</span>
+                    <div class="summary-value">$550.00</div>
+                    <span class="summary-subtitle">23.4% left</span>
+                </div>
+
+                <div class="overall-progress">
+                    <div class="progress-header">
+                        <span>Overall Progress</span>
+                        <span class="progress-percentage">76.6%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 76.6%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Categories Grid -->
+            <div class="budget-grid">
+                <!-- Food & Dining -->
+                <div class="budget-category-card">
+                    <div class="category-header">
+                        <div class="category-icon blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 3V12M8 3C6 3 4 5 4 7V12H8M8 3C10 3 12 5 12 7V12H8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M16 3V21M20 7V21" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h3>Food & Dining</h3>
+                            <span class="category-subtitle">Monthly Budget</span>
+                        </div>
+                        <button class="edit-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2L14 4.66667L5.33333 13.3333H2.66667V10.6667L11.3333 2Z" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="category-amount">
+                        <span class="amount">$420.00</span>
+                        <span class="budget-total">of $500.00</span>
+                        <span class="remaining green">$80.00</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-bar">
+                            <div class="category-fill blue-fill" style="width: 84%"></div>
+                        </div>
+                        <span class="usage-text">84.0% used</span>
+                    </div>
+                </div>
+
+                <!-- Transportation -->
+                <div class="budget-category-card">
+                    <div class="category-header">
+                        <div class="category-icon green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="8" width="16" height="10" rx="2" stroke="white" stroke-width="2"/>
+                                <circle cx="8" cy="18" r="2" stroke="white" stroke-width="2"/>
+                                <circle cx="16" cy="18" r="2" stroke="white" stroke-width="2"/>
+                                <path d="M4 11H20M7 8L9 4H15L17 8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h3>Transportation</h3>
+                            <span class="category-subtitle">Monthly Budget</span>
+                        </div>
+                        <button class="edit-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2L14 4.66667L5.33333 13.3333H2.66667V10.6667L11.3333 2Z" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="category-amount">
+                        <span class="amount">$180.00</span>
+                        <span class="budget-total">of $300.00</span>
+                        <span class="remaining green">$120.00</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-bar">
+                            <div class="category-fill green-fill" style="width: 60%"></div>
+                        </div>
+                        <span class="usage-text">60.0% used</span>
+                    </div>
+                </div>
+
+                <!-- Entertainment -->
+                <div class="budget-category-card">
+                    <div class="category-header">
+                        <div class="category-icon purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15 8.5L22 9.5L17 14.5L18 21.5L12 18L6 21.5L7 14.5L2 9.5L9 8.5L12 2Z" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h3>Entertainment</h3>
+                            <span class="category-subtitle">Monthly Budget</span>
+                        </div>
+                        <button class="edit-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2L14 4.66667L5.33333 13.3333H2.66667V10.6667L11.3333 2Z" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="category-amount">
+                        <span class="amount">$250.00</span>
+                        <span class="budget-total">of $200.00</span>
+                        <span class="remaining red">+$50.00</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-bar">
+                            <div class="category-fill red-fill" style="width: 100%"></div>
+                        </div>
+                        <div class="usage-row">
+                            <span class="usage-text">125.0% used</span>
+                            <span class="over-budget">Over budget</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shopping -->
+                <div class="budget-category-card">
+                    <div class="category-header">
+                        <div class="category-icon pink">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 6H18L20 18H4L6 6Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 10V6C9 4.34315 10.3431 3 12 3C13.6569 3 15 4.34315 15 6V10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h3>Shopping</h3>
+                            <span class="category-subtitle">Monthly Budget</span>
+                        </div>
+                        <button class="edit-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2L14 4.66667L5.33333 13.3333H2.66667V10.6667L11.3333 2Z" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="category-amount">
+                        <span class="amount">$340.00</span>
+                        <span class="budget-total">of $400.00</span>
+                        <span class="remaining green">$60.00</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-bar">
+                            <div class="category-fill pink-fill" style="width: 85%"></div>
+                        </div>
+                        <span class="usage-text">85.0% used</span>
+                    </div>
+                </div>
+
+                <!-- Utilities -->
+                <div class="budget-category-card">
+                    <div class="category-header">
+                        <div class="category-icon orange">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h3>Utilities</h3>
+                            <span class="category-subtitle">Monthly Budget</span>
+                        </div>
+                        <button class="edit-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2L14 4.66667L5.33333 13.3333H2.66667V10.6667L11.3333 2Z" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="category-amount">
+                        <span class="amount">$280.00</span>
+                        <span class="budget-total">of $350.00</span>
+                        <span class="remaining green">$70.00</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-bar">
+                            <div class="category-fill orange-fill" style="width: 80%"></div>
+                        </div>
+                        <span class="usage-text">80.0% used</span>
+                    </div>
+                </div>
+
+                <!-- Healthcare -->
+                <div class="budget-category-card">
+                    <div class="category-header">
+                        <div class="category-icon red">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 6V18M6 12H18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                                <rect x="4" y="4" width="16" height="16" rx="3" stroke="white" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h3>Healthcare</h3>
+                            <span class="category-subtitle">Monthly Budget</span>
+                        </div>
+                        <button class="edit-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2L14 4.66667L5.33333 13.3333H2.66667V10.6667L11.3333 2Z" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="category-amount">
+                        <span class="amount">$150.00</span>
+                        <span class="budget-total">of $250.00</span>
+                        <span class="remaining green">$100.00</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-bar">
+                            <div class="category-fill red-fill" style="width: 60%"></div>
+                        </div>
+                        <span class="usage-text">60.0% used</span>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="budget-category-card">
+                    <div class="category-header">
+                        <div class="category-icon indigo">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 14L21 9L12 4L3 9L12 14Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M7 11.5V16.5C7 16.5 9 19 12 19C15 19 17 16.5 17 16.5V11.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h3>Education</h3>
+                            <span class="category-subtitle">Monthly Budget</span>
+                        </div>
+                        <button class="edit-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2L14 4.66667L5.33333 13.3333H2.66667V10.6667L11.3333 2Z" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="category-amount">
+                        <span class="amount">$100.00</span>
+                        <span class="budget-total">of $200.00</span>
+                        <span class="remaining green">$100.00</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-bar">
+                            <div class="category-fill indigo-fill" style="width: 50%"></div>
+                        </div>
+                        <span class="usage-text">50.0% used</span>
+                    </div>
+                </div>
+
+                <!-- Other -->
+                <div class="budget-category-card">
+                    <div class="category-header">
+                        <div class="category-icon gray">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="1" fill="white"/>
+                                <circle cx="19" cy="12" r="1" fill="white"/>
+                                <circle cx="5" cy="12" r="1" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="category-info">
+                            <h3>Other</h3>
+                            <span class="category-subtitle">Monthly Budget</span>
+                        </div>
+                        <button class="edit-icon">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.3333 2L14 4.66667L5.33333 13.3333H2.66667V10.6667L11.3333 2Z" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="category-amount">
+                        <span class="amount">$80.00</span>
+                        <span class="budget-total">of $150.00</span>
+                        <span class="remaining green">$70.00</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-bar">
+                            <div class="category-fill gray-fill" style="width: 53.3%"></div>
+                        </div>
+                        <span class="usage-text">53.3% used</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

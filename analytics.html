@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analytics - FinFlow</title>
+    <link rel="stylesheet" href="css/analytics.css" />
+    <link rel="shortcut icon" href="finflow logo (1).png" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <div class="logo">
+          <img src="finflow logo (1).png" alt="" />
+          <span>FinFlow</span>
+        </div>
+
+        <nav class="nav-menu">
+          <a href="dashboard.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="3"
+                y="3"
+                width="6"
+                height="6"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <rect
+                x="11"
+                y="3"
+                width="6"
+                height="6"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <rect
+                x="3"
+                y="11"
+                width="6"
+                height="6"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <rect
+                x="11"
+                y="11"
+                width="6"
+                height="6"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="expenses.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="14"
+                height="12"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path d="M3 8H17" stroke="currentColor" stroke-width="1.5" />
+              <path
+                d="M7 12H9"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Expenses</span>
+          </a>
+
+          <a href="budget.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+            <span>Budgets</span>
+          </a>
+
+          <a href="analytics.html" class="nav-item active">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 16L7 12L10 15L17 8"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M17 12V8H13"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Analytics</span>
+          </a>
+
+          <a href="#" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+            <span>AI Insights</span>
+          </a>
+
+          <a href="profile.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="10"
+                cy="7"
+                r="3"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
+        </nav>
+
+        <a href="index.html" class="nav-item logout">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13 14L17 10L13 6"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M17 10H7"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Logout</span>
+        </a>
+      </aside>
+
+      <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="search-bar">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="9" cy="9" r="6" stroke="#9ca3af" stroke-width="1.5" />
+              <path
+                d="M13.5 13.5L17 17"
+                stroke="#9ca3af"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <input type="text" placeholder="Search transactions, budgets..." />
+          </div>
+
+          <div class="header-right">
+            <div class="notification">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 3C7.23858 3 5 5.23858 5 8V11L3 14H17L15 11V8C15 5.23858 12.7614 3 10 3Z"
+                  stroke="#4b5563"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14"
+                  stroke="#4b5563"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span class="notification-badge"></span>
+            </div>
+
+            <div class="user-info">
+              <div class="user-text">
+                <span class="welcome-text">Welcome back,</span>
+                <span class="user-name">Opadijo Tameem</span>
+              </div>
+              <div class="user-avatar">O</div>
+            </div>
+          </div>
+        </header>
+
+        <div class="analytics-section">
+          <header class="analytics-header">
+            <div class="header-text">
+              <h1>Analytics</h1>
+              <p>Visualize your financial data and trends</p>
+            </div>
+            <div class="time-selector">
+              <button class="time-btn">1M</button>
+              <button class="time-btn">3M</button>
+              <button class="time-btn active">6M</button>
+              <button class="time-btn">1Y</button>
+            </div>
+          </header>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Avg. Income</span
+                ><i class="ph ph-trend-up icon-green"></i>
+              </div>
+              <h2>$4,567</h2>
+              <p class="stat-trend trend-up">+8.2% vs last period</p>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Avg. Expenses</span
+                ><i class="ph ph-trend-down icon-red"></i>
+              </div>
+              <h2>$3,350</h2>
+              <p class="stat-trend trend-down">+5.4% vs last period</p>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Avg. Savings</span
+                ><i class="ph ph-currency-dollar icon-blue"></i>
+              </div>
+              <h2>$1,217</h2>
+              <p class="stat-trend trend-blue">+12.5% vs last period</p>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <span>Savings Rate</span
+                ><i class="ph ph-chart-line-up icon-purple"></i>
+              </div>
+              <h2>26.6%</h2>
+              <p class="stat-trend trend-purple">Excellent progress</p>
+            </div>
+          </div>
+
+          <div class="analytics-layout">
+            <div class="charts-column">
+              <div class="card chart-card">
+                <h3>Income vs Expenses</h3>
+                <div class="chart-container">
+                  <canvas id="incomeExpensesChart"></canvas>
+                </div>
+              </div>
+              <div class="card chart-card">
+                <h3>Cash Flow Trend</h3>
+                <div class="chart-container">
+                  <canvas id="cashFlowChart"></canvas>
+                </div>
+              </div>
+              <div class="card chart-card expense-chart-card">
+                <h3>Expense by Category</h3>
+                <div class="expense-chart-container">
+                  <svg
+                    id="expensePieChart"
+                    width="600"
+                    height="500"
+                    viewBox="0 0 600 500"
+                  ></svg>
+                  <div id="expenseTooltip" class="expense-tooltip"></div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="insights-sidebar">
+              <div class="sidebar-header">
+                <div class="ai-icon-circle">
+                  <i class="ph-fill ph-brain"></i>
+                </div>
+                <h2>AI Insights</h2>
+              </div>
+              <div class="insight-item">
+                <div class="insight-header">
+                  <i class="ph ph-trend-up green"></i
+                  ><strong>Positive Trend</strong>
+                </div>
+                <p>
+                  Your cash flow has increased by 295% over the last 6 month.
+                  you're consistently saving $1,100+ per month, which is
+                  excellent financial discipline.
+                </p>
+              </div>
+
+              <div class="insight-item">
+                <div class="insight-header">
+                  <i class="ph ph-currency-dollar green"></i
+                  ><strong>Spending Patterns</strong>
+                </div>
+                <p>
+                  Your top spending categories are Shopping (23%) and Food &
+                  Dining (28%). Consider setting stricter budgets in these areas
+                  to maximize savings.
+                </p>
+              </div>
+
+              <div class="insight-item">
+                <div class="insight-header">
+                  <i class="ph-fill ph-brain"></i
+                  ><strong>AI Recomendation</strong>
+                </div>
+                <p>
+                  Based on your income growth pattern, you could increase your
+                  monthly savings goal by 15% without impacting your lifestyle.
+                  This would add an extra $165/month to your savings.
+                </p>
+              </div>
+
+              <div class="insight-item">
+                <div class="insight-header">
+                  <i class="ph ph-trend-down green"></i
+                  ><strong>Watch Out</strong>
+                </div>
+                <p>
+                  Your Entertainment spending exceeded budget by 25% this month.
+                  Consider finding free or lower-cost entertainment alternatives
+                  to stay on track.
+                </p>
+              </div>
+
+              <div class="score-card">
+                <h3>Overall Score</h3>
+                <div class="score-display">
+                  <span class="score-number">8.5</span>
+                  <span class="score-total">/10</span>
+                </div>
+                <p>Excellent financial health!</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="js/analytics.js"></script>
+  </body>
+</html>

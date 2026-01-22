@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - FinFlow</title>
+    <link rel="shortcut icon" href="finflow logo (1).png" />
+
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="finflow logo (1).png" alt="" />
+        <span>FinFlow</span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="dashboadr.html" class="nav-item active">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="3"
+              y="3"
+              width="6"
+              height="6"
+              rx="1"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <rect
+              x="11"
+              y="3"
+              width="6"
+              height="6"
+              rx="1"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <rect
+              x="3"
+              y="11"
+              width="6"
+              height="6"
+              rx="1"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <rect
+              x="11"
+              y="11"
+              width="6"
+              height="6"
+              rx="1"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="expenses.html" class="nav-item">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="3"
+              y="4"
+              width="14"
+              height="12"
+              rx="2"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path d="M3 8H17" stroke="currentColor" stroke-width="1.5" />
+            <path
+              d="M7 12H9"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Expenses</span>
+        </a>
+
+        <a href="budget.html" class="nav-item">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path
+              d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+          </svg>
+          <span>Budgets</span>
+        </a>
+
+        <a href="analytics.html" class="nav-item">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 16L7 12L10 15L17 8"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M17 12V8H13"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span>Analytics</span>
+        </a>
+
+        <a href="#" class="nav-item">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+          </svg>
+          <span>AI Insights</span>
+        </a>
+
+        <a href="profile.html" class="nav-item">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="10"
+              cy="7"
+              r="3"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path
+              d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <a href="index.html" class="nav-item logout">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M13 14L17 10L13 6"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M17 10H7"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+          <path
+            d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+        </svg>
+        <span>Logout</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <div class="search-bar">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="9" cy="9" r="6" stroke="#9ca3af" stroke-width="1.5" />
+            <path
+              d="M13.5 13.5L17 17"
+              stroke="#9ca3af"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <input type="text" placeholder="Search transactions, budgets..." />
+        </div>
+
+        <div class="header-right">
+          <div class="notification">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 3C7.23858 3 5 5.23858 5 8V11L3 14H17L15 11V8C15 5.23858 12.7614 3 10 3Z"
+                stroke="#4b5563"
+                stroke-width="1.5"
+              />
+              <path d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14" stroke="#4b5563" stroke-width="1.5"
+                stroke-linecap="round"/>
+            </svg>
+            <span class="notification-badge"></span>
+          </div>
+
+          <div class="user-info">
+            <div class="user-text">
+              <span class="welcome-text">Welcome back,</span>
+              <span class="user-name">Opadijo Tameem</span>
+            </div>
+            <div class="user-avatar">O</div>
+          </div>
+        </div>
+      </header>
+      <!-- Dashboard Content -->
+      <div class="dashboard-content">
+        <div class="page-header">
+          <h1>Dashboard</h1>
+          <p>Welcome back! Here's your financial overview.</p>
+        </div>
+
+        <!-- Stats Cards & AI Insight -->
+       <div class="dashboard-container">
+        
+        <div class="row-top">
+            
+            <div class="card summary-card">
+                <div class="card-header">
+                    <span>Total Income</span>
+                    <i class="ph ph-trend-up icon-gray"></i>
+                </div>
+                <div class="amount">$8,420</div>
+                <div class="trend positive">
+                    <i class="ph ph-trend-up"></i>
+                    <span>+12.5%</span>
+                    <span class="trend-text">vs last month</span>
+                </div>
+            </div>
+
+            <div class="card summary-card">
+                <div class="card-header">
+                    <span>Total Expenses</span>
+                    <i class="ph ph-trend-down icon-gray"></i>
+                </div>
+                <div class="amount">$5,280</div>
+                <div class="trend negative">
+                    <i class="ph ph-trend-down"></i>
+                    <span>+8.2%</span>
+                    <span class="trend-text">vs last month</span>
+                </div>
+            </div>
+
+            <div class="card summary-card">
+                <div class="card-header">
+                    <span>Balance</span>
+                    <i class="ph ph-wallet icon-gray"></i>
+                </div>
+                <div class="amount">$3,140</div>
+                <div class="trend positive">
+                    <i class="ph ph-trend-up"></i>
+                    <span>+18.3%</span>
+                    <span class="trend-text">vs last month</span>
+                </div>
+            </div>
+
+            <div class="card ai-card">
+                <div class="ai-header">
+                    <i class="ph ph-sparkle-fill"></i>
+                    <span>AI Insight</span>
+                </div>
+                <p class="ai-text">
+                    Your spending on dining out increased by 35% this month. Consider setting a budget limit to save an extra <strong>$240</strong> next month.
+                </p>
+                <div class="ai-buttons">
+                    <button class="btn-white">Set Budget</button>
+                    <button class="btn-blue">View Details</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row-bottom">
+            
+            <div class="card large-card">
+                <h3>Recent Transactions</h3>
+                
+                <div class="transaction-list">
+                    <div class="transaction-item">
+                        <div class="t-details">
+                            <div class="t-title">Grocery Store</div>
+                            <div class="t-meta">Today • Food</div>
+                        </div>
+                        <div class="t-amount">-$85.50</div>
+                    </div>
+    
+                    <div class="transaction-item">
+                        <div class="t-details">
+                            <div class="t-title">Salary Deposit</div>
+                            <div class="t-meta">Dec 25 • Income</div>
+                        </div>
+                        <div class="t-amount positive">+$3,200</div>
+                    </div>
+    
+                    <div class="transaction-item">
+                        <div class="t-details">
+                            <div class="t-title">Electric Bill</div>
+                            <div class="t-meta">Dec 24 • Utilities</div>
+                        </div>
+                        <div class="t-amount">-$120.00</div>
+                    </div>
+    
+                    <div class="transaction-item">
+                        <div class="t-details">
+                            <div class="t-title">Restaurant</div>
+                            <div class="t-meta">Dec 23 • Dining</div>
+                        </div>
+                        <div class="t-amount">-$45.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card large-card">
+                <h3>Budget Overview</h3>
+    
+                <div class="budget-list">
+                    <div class="budget-item">
+                        <div class="b-header">
+                            <span>Food & Dining</span>
+                            <span class="b-values">$420 / $500</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="fill blue" style="width: 84%;"></div>
+                        </div>
+                    </div>
+    
+                    <div class="budget-item">
+                        <div class="b-header">
+                            <span>Transportation</span>
+                            <span class="b-values">$180 / $300</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="fill green" style="width: 60%;"></div>
+                        </div>
+                    </div>
+    
+                    <div class="budget-item">
+                        <div class="b-header">
+                            <span>Entertainment</span>
+                            <span class="b-values">$250 / $200</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="fill red" style="width: 100%;"></div>
+                        </div>
+                    </div>
+    
+                    <div class="budget-item">
+                        <div class="b-header">
+                            <span>Shopping</span>
+                            <span class="b-values">$340 / $400</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="fill purple" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+      </div>
+    </main>
+  </body>
+</html>
