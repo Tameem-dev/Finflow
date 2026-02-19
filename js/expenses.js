@@ -1,47 +1,11 @@
-// Initialize expenses from localStorage or use default data
+/**
+ * EXPENSE.JS
+ * Handles only the expense management logic.
+ * Auth and Logout are handled by logout.js
+ */
+
 let expenses = JSON.parse(localStorage.getItem('expenses')) || [
-    {
-        id: 1,
-        description: 'Gas Station',
-        amount: 700.00,
-        category: 'Food & Dining',
-        date: '2026-01-13'
-    },
-    {
-        id: 2,
-        description: 'Gas Station',
-        amount: 45.00,
-        category: 'Transportation',
-        date: '2024-12-27'
-    },
-    {
-        id: 3,
-        description: 'Movie Tickets',
-        amount: 32.00,
-        category: 'Entertainment',
-        date: '2024-12-26'
-    },
-    {
-        id: 4,
-        description: 'Electric Bill',
-        amount: 120.00,
-        category: 'Utilities',
-        date: '2024-12-24'
-    },
-    {
-        id: 5,
-        description: 'Restaurant Dinner',
-        amount: 68.50,
-        category: 'Food & Dining',
-        date: '2024-12-23'
-    },
-    {
-        id: 6,
-        description: 'Online Shopping',
-        amount: 156.99,
-        category: 'Shopping',
-        date: '2024-12-22'
-    }
+    { id: 1, description: 'Sample Expense', amount: 50.00, category: 'Food & Dining', date: '2026-02-11' }
 ];
 
 let editingExpenseId = null;
@@ -57,49 +21,44 @@ const submitBtn = document.getElementById('submitBtn');
 const searchInput = document.getElementById('searchInput');
 
 // Event Listeners
-addExpenseBtn.addEventListener('click', openAddModal);
-closeModalBtn.addEventListener('click', closeModal);
-cancelBtn.addEventListener('click', closeModal);
-expenseForm.addEventListener('submit', handleSubmit);
-searchInput.addEventListener('input', handleSearch);
+if (addExpenseBtn) addExpenseBtn.addEventListener('click', openAddModal);
+if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+if (expenseForm) expenseForm.addEventListener('submit', handleSubmit);
+if (searchInput) searchInput.addEventListener('input', handleSearch);
 
-// Close modal when clicking outside
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeModal();
-    }
-});
+// Close modal when clicking outside of it
+if (modal) {
+    modal.addEventListener('click', (e) => { 
+        if (e.target === modal) closeModal(); 
+    });
+}
 
-// Initialize
+// Initial Render
 renderExpenses();
 updateTotals();
 
-// Functions
+// --- CORE FUNCTIONS ---
+
 function openAddModal() {
     editingExpenseId = null;
     modalTitle.textContent = 'Add Expense';
     submitBtn.textContent = 'Add Expense';
     expenseForm.reset();
-    
-    // Set today's date as default
     document.getElementById('date').valueAsDate = new Date();
-    
     modal.classList.add('show');
 }
 
 function openEditModal(id) {
     const expense = expenses.find(e => e.id === id);
     if (!expense) return;
-
     editingExpenseId = id;
     modalTitle.textContent = 'Edit Expense';
     submitBtn.textContent = 'Update Expense';
-
     document.getElementById('description').value = expense.description;
     document.getElementById('amount').value = expense.amount;
     document.getElementById('category').value = expense.category;
     document.getElementById('date').value = expense.date;
-
     modal.classList.add('show');
 }
 
@@ -111,7 +70,6 @@ function closeModal() {
 
 function handleSubmit(e) {
     e.preventDefault();
-
     const formData = {
         description: document.getElementById('description').value,
         amount: parseFloat(document.getElementById('amount').value),
@@ -120,15 +78,10 @@ function handleSubmit(e) {
     };
 
     if (editingExpenseId) {
-        // Update existing expense
         const index = expenses.findIndex(e => e.id === editingExpenseId);
         expenses[index] = { ...expenses[index], ...formData };
     } else {
-        // Add new expense
-        const newExpense = {
-            id: Date.now(),
-            ...formData
-        };
+        const newExpense = { id: Date.now(), ...formData };
         expenses.unshift(newExpense);
     }
 
@@ -138,36 +91,47 @@ function handleSubmit(e) {
     closeModal();
 }
 
-function deleteExpense(id) {
-    if (confirm('Are you sure you want to delete this expense?')) {
-        expenses = expenses.filter(e => e.id !== id);
-        saveExpenses();
-        renderExpenses();
-        updateTotals();
-    }
-}
+// Global scope functions for HTML onclicks
+window.deleteExpense = function(id) {
+    // Using SweetAlert for Delete confirmation too!
+    Swal.fire({
+        title: 'Delete Expense?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444', // Red for delete
+        cancelButtonColor: '#9ca3af',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            expenses = expenses.filter(e => e.id !== id);
+            saveExpenses();
+            renderExpenses();
+            updateTotals();
+            Swal.fire('Deleted!', 'Your expense has been removed.', 'success');
+        }
+    });
+};
+
+window.openEditModal = openEditModal;
 
 function renderExpenses(filteredExpenses = expenses) {
     const tbody = document.getElementById('expensesTableBody');
     const emptyState = document.getElementById('emptyState');
+    if (!tbody) return;
 
     if (filteredExpenses.length === 0) {
         tbody.innerHTML = '';
-        emptyState.classList.add('show');
+        if (emptyState) emptyState.classList.add('show');
         return;
     }
-
-    emptyState.classList.remove('show');
-
+    if (emptyState) emptyState.classList.remove('show');
+    
     tbody.innerHTML = filteredExpenses.map(expense => `
         <tr>
             <td>${expense.description}</td>
             <td>$${expense.amount.toFixed(2)}</td>
-            <td>
-                <span class="category-badge category-${getCategoryClass(expense.category)}">
-                    ${expense.category}
-                </span>
-            </td>
+            <td><span class="category-badge">${expense.category}</span></td>
             <td>${formatDate(expense.date)}</td>
             <td>
                 <div class="actions">
@@ -185,23 +149,15 @@ function renderExpenses(filteredExpenses = expenses) {
 
 function updateTotals() {
     const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-    const count = expenses.length;
-
-    document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
-    document.getElementById('transactionCount').textContent = count;
-}
-
-function getCategoryClass(category) {
-    return category.toLowerCase().replace(/\s+&\s+/g, '-').replace(/\s+/g, '-');
+    const totalEl = document.getElementById('totalAmount');
+    const countEl = document.getElementById('transactionCount');
+    if (totalEl) totalEl.textContent = `$${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+    if (countEl) countEl.textContent = expenses.length;
 }
 
 function formatDate(dateString) {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'short', 
-        day: 'numeric' 
-    });
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
 function handleSearch(e) {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,6 +7,8 @@
     <link rel="shortcut icon" href="finflow logo (1).png" />
 
     <link rel="stylesheet" href="css/dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   </head>
   <body>
     <!-- Sidebar -->
@@ -17,7 +19,7 @@
       </div>
 
       <nav class="nav-menu">
-        <a href="dashboadr.html" class="nav-item active">
+        <a href="dashboard.html" class="nav-item active">
           <svg
             width="20"
             height="20"
@@ -184,7 +186,7 @@
         </a>
       </nav>
 
-      <a href="index.html" class="nav-item logout">
+      <a href="#" class="nav-item logout" id="logoutBtn">
         <svg
           width="20"
           height="20"
@@ -253,8 +255,12 @@
                 stroke="#4b5563"
                 stroke-width="1.5"
               />
-              <path d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14" stroke="#4b5563" stroke-width="1.5"
-                stroke-linecap="round"/>
+              <path
+                d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14"
+                stroke="#4b5563"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
             </svg>
             <span class="notification-badge"></span>
           </div>
@@ -262,9 +268,9 @@
           <div class="user-info">
             <div class="user-text">
               <span class="welcome-text">Welcome back,</span>
-              <span class="user-name">Opadijo Tameem</span>
+              <span class="user-name"></span>
             </div>
-            <div class="user-avatar">O</div>
+            <div class="user-avatar"></div>
           </div>
         </div>
       </header>
@@ -276,155 +282,153 @@
         </div>
 
         <!-- Stats Cards & AI Insight -->
-       <div class="dashboard-container">
-        
-        <div class="row-top">
-            
+        <div class="dashboard-container">
+          <div class="row-top">
             <div class="card summary-card">
-                <div class="card-header">
-                    <span>Total Income</span>
-                    <i class="ph ph-trend-up icon-gray"></i>
-                </div>
-                <div class="amount">$8,420</div>
-                <div class="trend positive">
-                    <i class="ph ph-trend-up"></i>
-                    <span>+12.5%</span>
-                    <span class="trend-text">vs last month</span>
-                </div>
+              <div class="card-header">
+                <span>Total Income</span>
+                <i class="ph ph-trend-up icon-gray"></i>
+              </div>
+              <div class="amount">$8,420</div>
+              <div class="trend positive">
+                <i class="ph ph-trend-up"></i>
+                <span>+12.5%</span>
+                <span class="trend-text">vs last month</span>
+              </div>
             </div>
 
             <div class="card summary-card">
-                <div class="card-header">
-                    <span>Total Expenses</span>
-                    <i class="ph ph-trend-down icon-gray"></i>
-                </div>
-                <div class="amount">$5,280</div>
-                <div class="trend negative">
-                    <i class="ph ph-trend-down"></i>
-                    <span>+8.2%</span>
-                    <span class="trend-text">vs last month</span>
-                </div>
+              <div class="card-header">
+                <span>Total Expenses</span>
+                <i class="ph ph-trend-down icon-gray"></i>
+              </div>
+              <div class="amount">$5,280</div>
+              <div class="trend negative">
+                <i class="ph ph-trend-down"></i>
+                <span>+8.2%</span>
+                <span class="trend-text">vs last month</span>
+              </div>
             </div>
 
             <div class="card summary-card">
-                <div class="card-header">
-                    <span>Balance</span>
-                    <i class="ph ph-wallet icon-gray"></i>
-                </div>
-                <div class="amount">$3,140</div>
-                <div class="trend positive">
-                    <i class="ph ph-trend-up"></i>
-                    <span>+18.3%</span>
-                    <span class="trend-text">vs last month</span>
-                </div>
+              <div class="card-header">
+                <span>Balance</span>
+                <i class="ph ph-wallet icon-gray"></i>
+              </div>
+              <div class="amount">$3,140</div>
+              <div class="trend positive">
+                <i class="ph ph-trend-up"></i>
+                <span>+18.3%</span>
+                <span class="trend-text">vs last month</span>
+              </div>
             </div>
 
             <div class="card ai-card">
-                <div class="ai-header">
-                    <i class="ph ph-sparkle-fill"></i>
-                    <span>AI Insight</span>
-                </div>
-                <p class="ai-text">
-                    Your spending on dining out increased by 35% this month. Consider setting a budget limit to save an extra <strong>$240</strong> next month.
-                </p>
-                <div class="ai-buttons">
-                    <button class="btn-white">Set Budget</button>
-                    <button class="btn-blue">View Details</button>
-                </div>
+              <div class="ai-header">
+                <i class="ph ph-sparkle-fill"></i>
+                <span>AI Insight</span>
+              </div>
+              <p class="ai-text">
+                Your spending on dining out increased by 35% this month.
+                Consider setting a budget limit to save an extra
+                <strong>$240</strong> next month.
+              </p>
+              <div class="ai-buttons">
+                <button class="btn-white">Set Budget</button>
+                <button class="btn-blue">View Details</button>
+              </div>
             </div>
+          </div>
 
-        </div>
-
-        <div class="row-bottom">
-            
+          <div class="row-bottom">
             <div class="card large-card">
-                <h3>Recent Transactions</h3>
-                
-                <div class="transaction-list">
-                    <div class="transaction-item">
-                        <div class="t-details">
-                            <div class="t-title">Grocery Store</div>
-                            <div class="t-meta">Today • Food</div>
-                        </div>
-                        <div class="t-amount">-$85.50</div>
-                    </div>
-    
-                    <div class="transaction-item">
-                        <div class="t-details">
-                            <div class="t-title">Salary Deposit</div>
-                            <div class="t-meta">Dec 25 • Income</div>
-                        </div>
-                        <div class="t-amount positive">+$3,200</div>
-                    </div>
-    
-                    <div class="transaction-item">
-                        <div class="t-details">
-                            <div class="t-title">Electric Bill</div>
-                            <div class="t-meta">Dec 24 • Utilities</div>
-                        </div>
-                        <div class="t-amount">-$120.00</div>
-                    </div>
-    
-                    <div class="transaction-item">
-                        <div class="t-details">
-                            <div class="t-title">Restaurant</div>
-                            <div class="t-meta">Dec 23 • Dining</div>
-                        </div>
-                        <div class="t-amount">-$45.00</div>
-                    </div>
+              <h3>Recent Transactions</h3>
+
+              <div class="transaction-list">
+                <div class="transaction-item">
+                  <div class="t-details">
+                    <div class="t-title">Grocery Store</div>
+                    <div class="t-meta">Today • Food</div>
+                  </div>
+                  <div class="t-amount">-$85.50</div>
                 </div>
+
+                <div class="transaction-item">
+                  <div class="t-details">
+                    <div class="t-title">Salary Deposit</div>
+                    <div class="t-meta">Dec 25 • Income</div>
+                  </div>
+                  <div class="t-amount positive">+$3,200</div>
+                </div>
+
+                <div class="transaction-item">
+                  <div class="t-details">
+                    <div class="t-title">Electric Bill</div>
+                    <div class="t-meta">Dec 24 • Utilities</div>
+                  </div>
+                  <div class="t-amount">-$120.00</div>
+                </div>
+
+                <div class="transaction-item">
+                  <div class="t-details">
+                    <div class="t-title">Restaurant</div>
+                    <div class="t-meta">Dec 23 • Dining</div>
+                  </div>
+                  <div class="t-amount">-$45.00</div>
+                </div>
+              </div>
             </div>
 
             <div class="card large-card">
-                <h3>Budget Overview</h3>
-    
-                <div class="budget-list">
-                    <div class="budget-item">
-                        <div class="b-header">
-                            <span>Food & Dining</span>
-                            <span class="b-values">$420 / $500</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="fill blue" style="width: 84%;"></div>
-                        </div>
-                    </div>
-    
-                    <div class="budget-item">
-                        <div class="b-header">
-                            <span>Transportation</span>
-                            <span class="b-values">$180 / $300</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="fill green" style="width: 60%;"></div>
-                        </div>
-                    </div>
-    
-                    <div class="budget-item">
-                        <div class="b-header">
-                            <span>Entertainment</span>
-                            <span class="b-values">$250 / $200</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="fill red" style="width: 100%;"></div>
-                        </div>
-                    </div>
-    
-                    <div class="budget-item">
-                        <div class="b-header">
-                            <span>Shopping</span>
-                            <span class="b-values">$340 / $400</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="fill purple" style="width: 85%;"></div>
-                        </div>
-                    </div>
+              <h3>Budget Overview</h3>
+
+              <div class="budget-list">
+                <div class="budget-item">
+                  <div class="b-header">
+                    <span>Food & Dining</span>
+                    <span class="b-values">$420 / $500</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="fill blue" style="width: 84%"></div>
+                  </div>
                 </div>
+
+                <div class="budget-item">
+                  <div class="b-header">
+                    <span>Transportation</span>
+                    <span class="b-values">$180 / $300</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="fill green" style="width: 60%"></div>
+                  </div>
+                </div>
+
+                <div class="budget-item">
+                  <div class="b-header">
+                    <span>Entertainment</span>
+                    <span class="b-values">$250 / $200</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="fill red" style="width: 100%"></div>
+                  </div>
+                </div>
+
+                <div class="budget-item">
+                  <div class="b-header">
+                    <span>Shopping</span>
+                    <span class="b-values">$340 / $400</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="fill purple" style="width: 85%"></div>
+                  </div>
+                </div>
+              </div>
             </div>
-
+          </div>
         </div>
-
-    </div>
       </div>
     </main>
+    <script src="js/dashboard.js"></script>
+    <script src="js/logout.js"></script>
   </body>
 </html>

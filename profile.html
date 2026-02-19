@@ -1,247 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - FinFlow</title>
-    <link rel="shortcut icon" href="finflow logo (1).png" />
-    <link rel="stylesheet" href="css/profile.css">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-        <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="logo">
-        <img src="finflow logo (1).png" alt="" />
-        <span>FinFlow</span>
-      </div>
-
-      <nav class="nav-menu">
-        <a href="dashboard.html" class="nav-item">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="3"
-              y="3"
-              width="6"
-              height="6"
-              rx="1"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <rect
-              x="11"
-              y="3"
-              width="6"
-              height="6"
-              rx="1"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <rect
-              x="3"
-              y="11"
-              width="6"
-              height="6"
-              rx="1"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <rect
-              x="11"
-              y="11"
-              width="6"
-              height="6"
-              rx="1"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-          </svg>
-          <span>Dashboard</span>
-        </a>
-
-        <a href="expenses.html" class="nav-item">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="3"
-              y="4"
-              width="14"
-              height="12"
-              rx="2"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <path d="M3 8H17" stroke="currentColor" stroke-width="1.5" />
-            <path
-              d="M7 12H9"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-          </svg>
-          <span>Expenses</span>
-        </a>
-
-        <a href="budget.html" class="nav-item">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <path
-              d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-          </svg>
-          <span>Budgets</span>
-        </a>
-
-        <a href="analytics.html" class="nav-item">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M3 16L7 12L10 15L17 8"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M17 12V8H13"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          <span>Analytics</span>
-        </a>
-
-        <a href="#" class="nav-item">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-          </svg>
-          <span>AI Insights</span>
-        </a>
-
-        <a href="profile.html" class="nav-item active">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="10"
-              cy="7"
-              r="3"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <path
-              d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-          </svg>
-          <span>Profile</span>
-        </a>
-      </nav>
-
-      <a href="index.html" class="nav-item logout">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13 14L17 10L13 6"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M17 10H7"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-          <path
-            d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-        </svg>
-        <span>Logout</span>
-      </a>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Header -->
-      <header class="header">
-        <div class="search-bar">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="9" cy="9" r="6" stroke="#9ca3af" stroke-width="1.5" />
-            <path
-              d="M13.5 13.5L17 17"
-              stroke="#9ca3af"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-          </svg>
-          <input type="text" placeholder="Search transactions, budgets..." />
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Dashboard - FinFlow</title>
+      <link rel="shortcut icon" href="finflow logo (1).png" />
+      <link rel="stylesheet" href="css/profile.css">
+      <script src="https://unpkg.com/@phosphor-icons/web"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+          <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <img src="finflow logo (1).png" alt="" />
+          <span>FinFlow</span>
         </div>
 
-        <div class="header-right">
-          <div class="notification">
+        <nav class="nav-menu">
+          <a href="dashboard.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="3"
+                y="3"
+                width="6"
+                height="6"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <rect
+                x="11"
+                y="3"
+                width="6"
+                height="6"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <rect
+                x="3"
+                y="11"
+                width="6"
+                height="6"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <rect
+                x="11"
+                y="11"
+                width="6"
+                height="6"
+                rx="1"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="expenses.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="14"
+                height="12"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path d="M3 8H17" stroke="currentColor" stroke-width="1.5" />
+              <path
+                d="M7 12H9"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Expenses</span>
+          </a>
+
+          <a href="budget.html" class="nav-item">
             <svg
               width="20"
               height="20"
@@ -250,251 +104,402 @@
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M10 3C7.23858 3 5 5.23858 5 8V11L3 14H17L15 11V8C15 5.23858 12.7614 3 10 3Z"
-                stroke="#4b5563"
+                d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z"
+                stroke="currentColor"
                 stroke-width="1.5"
               />
               <path
-                d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14"
-                stroke="#4b5563"
+                d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+            <span>Budgets</span>
+          </a>
+
+          <a href="analytics.html" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 16L7 12L10 15L17 8"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M17 12V8H13"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Analytics</span>
+          </a>
+
+          <a href="#" class="nav-item">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+            <span>AI Insights</span>
+          </a>
+
+          <a href="profile.html" class="nav-item active">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="10"
+                cy="7"
+                r="3"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17"
+                stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
               />
             </svg>
-            <span class="notification-badge"></span>
+            <span>Profile</span>
+          </a>
+        </nav>
+
+        <a href="#" id="logoutBtn" class="nav-item logout">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13 14L17 10L13 6"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M17 10H7"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Logout</span>
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+          <div class="search-bar">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="9" cy="9" r="6" stroke="#9ca3af" stroke-width="1.5" />
+              <path
+                d="M13.5 13.5L17 17"
+                stroke="#9ca3af"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <input type="text" placeholder="Search transactions, budgets..." />
           </div>
 
-          <div class="user-info">
-            <div class="user-text">
-              <span class="welcome-text">Welcome back,</span>
-              <span class="user-name">Opadijo Tameem</span>
+          <div class="header-right">
+            <div class="notification">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 3C7.23858 3 5 5.23858 5 8V11L3 14H17L15 11V8C15 5.23858 12.7614 3 10 3Z"
+                  stroke="#4b5563"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14"
+                  stroke="#4b5563"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span class="notification-badge"></span>
             </div>
-            <div class="user-avatar">O</div>
+
+            <div class="user-info">
+              <div class="user-text">
+                <span class="welcome-text">Welcome back,</span>
+                <span class="user-name"></span>
+              </div>
+              <div class="user-avatar">O</div>
+            </div>
           </div>
-        </div>
-      </header>
-
-      <!-- Next  -->
-
-      <div class="main-container">
-        
-        <header class="page-header">
-            <h1>Profile & Settings</h1>
-            <p>Manage your account settings and preferences</p>
         </header>
 
-        <div class="content-grid">
-            
-            <aside class="profile-sidebar">
-                <div class="card profile-card">
-                    <div class="avatar-container">
-                        <div class="avatar">
-                            <i class="ph ph-user"></i>
-                        </div>
-                    </div>
-                    <h2 class="user-name">Opadijo Tameem</h2>
-                    <p class="user-email">opadijoadeleke2@gmail.com</p>
+        <!-- Next  -->
 
-                    <div class="divider"></div>
+        <div class="main-container">
+          
+          <header class="page-header">
+              <h1>Profile & Settings</h1>
+              <p>Manage your account settings and preferences</p>
+          </header>
 
-                    <div class="profile-details">
-                        <div class="detail-row">
-                            <span class="label">Member Since</span>
-                            <span class="value">Jan 2024</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Account Type</span>
-                            <span class="value highlight-blue">Premium</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">AI Insights</span>
-                            <span class="value highlight-green">Enabled</span>
-                        </div>
-                    </div>
+          <div class="content-grid">
+              
+              <aside class="profile-sidebar">
+                  <div class="card profile-card">
+                      <div class="avatar-container">
+                          <div class="avatar">
+                              <i class="ph ph-user"></i>
+                          </div>
+                      </div>
+                      <h2 class="user-name"></h2>
+                      <p class="user-email"></p>
 
-                    <div class="verified-badge">
-                        <i class="ph ph-shield-check"></i>
-                        <div class="badge-text">
-                            <strong>Account Verified</strong>
-                            <span>Your account is secure and verified</span>
-                        </div>
-                    </div>
-                </div>
-            </aside>
 
-            <div class="settings-column">
-        
-        <div class="card settings-card">
-            <div class="card-header">
-                <i class="ph ph-user-circle"></i>
-                <h3>Personal Information</h3>
-            </div>
-            <form class="vertical-form">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Your Name">
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" placeholder="Your Email">
-                </div>
-                <button type="button" class="btn-black">Save Changes</button>
-            </form>
-        </div>
+                      <div class="divider"></div>
 
-        <div class="card settings-card">
-            <div class="card-header">
-                <i class="ph ph-lock-key"></i>
-                <h3>Update Password</h3>
-            </div>
-            <form class="vertical-form">
-                <div class="form-group">
-                    <label>Current Password</label>
-                    <input type="password" placeholder="••••••••">
-                </div>
-                <div class="form-group">
-                    <label>New Password</label>
-                    <input type="password" placeholder="Min. 8 characters">
-                </div>
-                <button type="button" class="btn-black">Update Password</button>
-            </form>
-        </div>
+                      <div class="profile-details">
+                          <div class="detail-row">
+                              <span class="label">Member Since</span>
+                              <span class="value">Jan 2024</span>
+                          </div>
+                          <div class="detail-row">
+                              <span class="label">Account Type</span>
+                              <span class="value highlight-blue">Premium</span>
+                          </div>
+                          <div class="detail-row">
+                              <span class="label">AI Insights</span>
+                              <span class="value highlight-green">Enabled</span>
+                          </div>
+                      </div>
 
-        <div class="card settings-card">
-            <div class="card-header">
-                <i class="ph ph-palette" style="color: #db2777;"></i>
-                <h3>Theme Preferences</h3>
-            </div>
-            <div class="theme-grid">
-                <div class="theme-option active">
-                    <div class="theme-icon-box"><i class="ph ph-sun"></i></div>
-                    <span class="theme-label">Light</span>
-                    <span class="theme-status">Active</span>
-                </div>
-                <div class="theme-option">
-                    <div class="theme-icon-box dark"><i class="ph ph-moon"></i></div>
-                    <span class="theme-label">Dark</span>
-                </div>
-                <div class="theme-option">
-                    <div class="theme-icon-box gray"><i class="ph ph-desktop"></i></div>
-                    <span class="theme-label">Auto</span>
-                </div>
-            </div>
-        </div>
+                      <div class="verified-badge">
+                          <i class="ph ph-shield-check"></i>
+                          <div class="badge-text">
+                              <strong>Account Verified</strong>
+                              <span>Your account is secure and verified</span>
+                          </div>
+                      </div>
+                  </div>
+              </aside>
 
-        <div class="card settings-card">
-            <div class="card-header">
-                <i class="ph ph-brain" style="color: #8b5cf6;"></i>
-                <h3>AI Preferences</h3>
-            </div>
-            
-            <div class="ai-toggle-box">
-                <div class="ai-toggle-content">
-                    <div class="ai-title-row">
-                        <i class="ph ph-sparkle-fill" style="color: #8b5cf6;"></i>
-                        <strong>Enable AI Insights</strong>
-                    </div>
-                    <p>Get personalized financial recommendations and insights powered by AI</p>
-                    <div class="ai-security-note">
-                        <i class="ph ph-shield-check"></i>
-                        Your data is analyzed securely to give AI insights
-                    </div>
-                </div>
-                <label class="switch">
-                    <input type="checkbox" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
+              <div class="settings-column">
+          
+          <div class="card settings-card">
+              <div class="card-header">
+                  <i class="ph ph-user-circle"></i>
+                  <h3>Personal Information</h3>
+              </div>
+              <form class="vertical-form">
+                  <div class="form-group">
+                      <label>Full Name</label>
+                      <input type="text" placeholder="Your Name">
+                  </div>
+                  <div class="form-group">
+                      <label>Email Address</label>
+                      <input type="email" placeholder="Your Email">
+                  </div>
+                  <button type="button" class="btn-black">Save Changes</button>
+              </form>
+          </div>
 
-            <div class="ai-features">
-                <p class="features-title">AI Features Included:</p>
-                <ul class="features-list">
-                    <li>Smart spending analysis and categorization</li>
-                    <li>Personalized budget recommendations</li>
-                    <li>Financial health score and insights</li>
-                    <li>AI-powered chat assistant</li>
-                </ul>
-            </div>
-        </div>
+          <div class="card settings-card">
+              <div class="card-header">
+                  <i class="ph ph-lock-key"></i>
+                  <h3>Update Password</h3>
+              </div>
+              <form class="vertical-form">
+                  <div class="form-group">
+                      <label>Current Password</label>
+                      <input type="password" placeholder="••••••••">
+                  </div>
+                  <div class="form-group">
+                      <label>New Password</label>
+                      <input type="password" placeholder="Min. 8 characters">
+                  </div>
+                  <button type="button" class="btn-black">Update Password</button>
+              </form>
+          </div>
 
-        <div class="card settings-card">
-    <div class="card-header">
-        <i class="ph ph-bell" style="color: #f97316;"></i>
-        <h3>Notification Preferences</h3>
-    </div>
+          <div class="card settings-card">
+              <div class="card-header">
+                  <i class="ph ph-palette" style="color: #db2777;"></i>
+                  <h3>Theme Preferences</h3>
+              </div>
+              <div class="theme-grid">
+                  <div class="theme-option active">
+                      <div class="theme-icon-box"><i class="ph ph-sun"></i></div>
+                      <span class="theme-label">Light</span>
+                      <span class="theme-status">Active</span>
+                  </div>
+                  <div class="theme-option">
+                      <div class="theme-icon-box dark"><i class="ph ph-moon"></i></div>
+                      <span class="theme-label">Dark</span>
+                  </div>
+                  <div class="theme-option">
+                      <div class="theme-icon-box gray"><i class="ph ph-desktop"></i></div>
+                      <span class="theme-label">Auto</span>
+                  </div>
+              </div>
+          </div>
 
-    <div class="setting-list">
-        <div class="setting-item">
-            <div class="setting-text">
-                <strong>Email Notifications</strong>
-                <p>Receive updates via email</p>
-            </div>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
+          <div class="card settings-card">
+              <div class="card-header">
+                  <i class="ph ph-brain" style="color: #8b5cf6;"></i>
+                  <h3>AI Preferences</h3>
+              </div>
+              
+              <div class="ai-toggle-box">
+                  <div class="ai-toggle-content">
+                      <div class="ai-title-row">
+                          <i class="ph ph-sparkle-fill" style="color: #8b5cf6;"></i>
+                          <strong>Enable AI Insights</strong>
+                      </div>
+                      <p>Get personalized financial recommendations and insights powered by AI</p>
+                      <div class="ai-security-note">
+                          <i class="ph ph-shield-check"></i>
+                          Your data is analyzed securely to give AI insights
+                      </div>
+                  </div>
+                  <label class="switch">
+                      <input type="checkbox" checked>
+                      <span class="slider"></span>
+                  </label>
+              </div>
 
-        <div class="setting-item">
-            <div class="setting-text">
-                <strong>Push Notifications</strong>
-                <p>Get push notifications on your device</p>
-            </div>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
+              <div class="ai-features">
+                  <p class="features-title">AI Features Included:</p>
+                  <ul class="features-list">
+                      <li>Smart spending analysis and categorization</li>
+                      <li>Personalized budget recommendations</li>
+                      <li>Financial health score and insights</li>
+                      <li>AI-powered chat assistant</li>
+                  </ul>
+              </div>
+          </div>
 
-        <div class="setting-item">
-            <div class="setting-text">
-                <strong>Budget Alerts</strong>
-                <p>Get notified when approaching budget limits</p>
-            </div>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
+          <div class="card settings-card">
+      <div class="card-header">
+          <i class="ph ph-bell" style="color: #f97316;"></i>
+          <h3>Notification Preferences</h3>
+      </div>
 
-        <div class="setting-item">
-            <div class="setting-text">
-                <strong>Unusual Spending Alerts</strong>
-                <p>Get alerts for unusual spending patterns</p>
-            </div>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
-    </div>
-</div>
+      <div class="setting-list">
+          <div class="setting-item">
+              <div class="setting-text">
+                  <strong>Email Notifications</strong>
+                  <p>Receive updates via email</p>
+              </div>
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+              </label>
+          </div>
 
-<div class="card danger-card">
-    <h3 class="danger-title">Danger Zone</h3>
+          <div class="setting-item">
+              <div class="setting-text">
+                  <strong>Push Notifications</strong>
+                  <p>Get push notifications on your device</p>
+              </div>
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+              </label>
+          </div>
 
-    <div class="danger-box">
-        <div class="danger-item">
-            <div class="setting-text">
-                <strong>Export Data</strong>
-                <p>Download all your financial data</p>
-            </div>
-            <button class="btn-white">Export</button>
-        </div>
+          <div class="setting-item">
+              <div class="setting-text">
+                  <strong>Budget Alerts</strong>
+                  <p>Get notified when approaching budget limits</p>
+              </div>
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+              </label>
+          </div>
 
-        <div class="danger-item">
-            <div class="setting-text">
-                <strong>Delete Account</strong>
-                <p>Permanently delete your account and data</p>
-            </div>
-            <button class="btn-danger">Delete</button>
-        </div>
-    </div>
-</div>
+          <div class="setting-item">
+              <div class="setting-text">
+                  <strong>Unusual Spending Alerts</strong>
+                  <p>Get alerts for unusual spending patterns</p>
+              </div>
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+              </label>
+          </div>
+      </div>
+  </div>
 
-    </div>
-            
-    </main>         
-        
-</body>
-</html>
+  <div class="card danger-card">
+      <h3 class="danger-title">Danger Zone</h3>
+
+      <div class="danger-box">
+          <div class="danger-item">
+              <div class="setting-text">
+                  <strong>Export Data</strong>
+                  <p>Download all your financial data</p>
+              </div>
+              <button class="btn-white">Export</button>
+          </div>
+
+          <div class="danger-item">
+              <div class="setting-text">
+                  <strong>Delete Account</strong>
+                  <p>Permanently delete your account and data</p>
+              </div>
+              <button class="btn-danger">Delete</button>
+          </div>
+      </div>
+  </div>
+
+      </div>
+              
+      </main> 
+      
+      <script src="js/profile.js"></script>
+    <script src="js/logout.js"></script>
+          
+  </body>
+  </html>

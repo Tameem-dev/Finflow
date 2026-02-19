@@ -493,6 +493,29 @@ body {
     font-weight: 600;
 }
 
+/* Delete button styling */
+.delete-btn-x {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.delete-btn-x:hover {
+    color: #ef4444;
+    transform: scale(1.2);
+}
+
+/* Ensure cards stay uniform */
+.budget-category-card {
+    position: relative;
+    min-width: 280px;
+}
+
 /* Responsive Design */
 @media (max-width: 1400px) {
     .budget-grid {

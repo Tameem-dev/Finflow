@@ -10,6 +10,7 @@ body {
     color: #1f2937;
     background-color: #f0f4f8;
 }
+
 .login-container {
     width: 100%;
     max-width: 460px;
@@ -73,6 +74,7 @@ body {
 
 .form-group {
     margin-bottom: 24px;
+    position: relative;
 }
 
 .form-group label {
@@ -124,32 +126,45 @@ body {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
+.fa-regular {
+    position: absolute;
+    top: 55px;
+    right: 12px;
+    cursor: pointer;
+    color: #6b7280;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.fa-regular:hover {
+    color: #374151;
+}
+
 .login-button {
-  display: inline-block;
-  width: 100%;              /* makes it long */
-  max-width: 420px;         /* control how long */
-  padding: 14px 0;
-  text-align: center;
-
-  background-color: #458FF6;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-
-  border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    width: 100%;
+    max-width: 420px;
+    padding: 14px 0;
+    text-align: center;
+    background-color: #458FF6;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .login-button:hover {
-  background-color: #2f6fe0;
-  transform: translateY(-2px);
+    background-color: #2f6fe0;
+    transform: translateY(-2px);
 }
 
 .login-button:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
-
 
 .signup-text {
     text-align: center;

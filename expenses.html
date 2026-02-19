@@ -8,6 +8,8 @@
     <link rel="shortcut icon" href="finflow logo (1).png" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
     <!-- Sidebar -->
@@ -49,7 +51,7 @@
             </a>
         </nav>
 
-        <a href="index.html" class="nav-item logout">
+        <a href="#" class="nav-item logout" id="logoutBtn">
             <i class="ph ph-sign-out"></i>
             <span>Logout</span>
         </a>
@@ -73,7 +75,7 @@
                 <div class="user-info">
                     <div class="user-text">
                         <span class="welcome-text">Welcome back,</span>
-                        <span class="user-name">John Doe</span>
+                        <span class="user-name"></span>
                     </div>
                     <div class="user-avatar">J</div>
                 </div>
@@ -180,5 +182,6 @@
     </div>
 
     <script src="js/expenses.js"></script>
+    <script src="js/logout.js"></script>
 </body>
 </html>

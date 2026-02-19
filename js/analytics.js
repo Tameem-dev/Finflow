@@ -1,3 +1,47 @@
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. AUTH GUARD - Kick out if not logged in
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+        window.location.href = "login.html";
+        return;
+    }
+
+    // 2. GET USER DATA
+    const storedName = localStorage.getItem("userName") || "User";
+    const initial = storedName.charAt(0).toUpperCase();
+
+    // 3. UPDATE UI ELEMENTS
+    const nameElement = document.querySelector(".user-name");
+    if (nameElement) nameElement.textContent = storedName;
+
+    const avatarElement = document.querySelector(".user-avatar");
+    if (avatarElement) avatarElement.textContent = initial;
+
+    const pageHeaderP = document.querySelector(".page-header p");
+    if (pageHeaderP) {
+        pageHeaderP.textContent = `Welcome back, ${storedName.split(' ')[0]}! Here's your financial overview.`;
+    }
+
+     const logoutBtn = document.getElementById("logout");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.setItem("isLoggedIn", "false");
+                window.location.href = "login.html";
+            }
+        });
+    }
+
+     const searchInput = document.querySelector(".search-bar input");
+    if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+            console.log("Searching for:", e.target.value);
+        });
+    }
+});
+
+
 // 1. Income vs Expenses Bar Chart
 const ctx1 = document.getElementById('incomeExpensesChart').getContext('2d');
 new Chart(ctx1, {

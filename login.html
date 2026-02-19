@@ -1,65 +1,96 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
     <title>Login - FinFlow</title>
     <link rel="shortcut icon" href="finflow logo (1).png" />
-    <link rel="stylesheet" href="css/login.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body>
     <div class="login-container">
-        <div class="login-card">
-            <div class="logo-container">
-                <a href="index.html" class="logo-circle">
-                    <img src="finflow logo (1).png" alt="">
-                </a>
-            </div>
-
-            <h1 class="login-title">Welcome Back</h1>
-            <p class="login-subtitle">
-                Log in to your FinFlow account 
-                <svg class="shield-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 1L3 3V7C3 10.5 5.5 13.5 8 14.5C10.5 13.5 13 10.5 13 7V3L8 1Z" fill="#10b981" stroke="#10b981" stroke-width="1.5"/>
-                    <path d="M6 8L7.5 9.5L10.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </p>
-
-            <form class="login-form">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="you@example.com"
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <div class="password-header">
-                        <label for="password">Password</label>
-                        <a href="#" class="forgot-link">Forgot?</a>
-                    </div>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="••••••••"
-                        required
-                    >
-                </div>
-
-                <a href="dashboard.html" type="submit" class="login-button">Log In</a>
-
-                <p class="signup-text">
-                    Don't have an account? <a href="signup.html" class="signup-link">Sign up</a>
-                </p>
-            </form>
+      <div class="login-card">
+        <div class="logo-container">
+          <a href="index.html" class="logo-circle">
+            <img src="finflow logo (1).png" alt="" />
+          </a>
         </div>
+
+        <h1 class="login-title">Welcome Back</h1>
+        <p class="login-subtitle">
+          Log in to your FinFlow account
+          <svg
+            class="shield-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 1L3 3V7C3 10.5 5.5 13.5 8 14.5C10.5 13.5 13 10.5 13 7V3L8 1Z"
+              fill="#10b981"
+              stroke="#10b981"
+              stroke-width="1.5"
+            />
+            <path
+              d="M6 8L7.5 9.5L10.5 6.5"
+              stroke="white"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </p>
+
+        <form class="login-form" id="form-wrappers">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <div class="password-header">
+              <label for="password">Password</label>
+              <a href="forgetpassword.html" class="forgot-link">Forgot?</a>
+            </div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              required
+            />
+
+            <div class="form-group-icon">
+              <i class="fa-regular fa-eye" id="fa-eye"></i>
+              <i class="fa-regular fa-eye-slash" id="fa-eye-slash"></i>
+            </div>
+          </div>
+
+          <div class="btn">
+            <button type="submit" class="login-button">Log In</button>
+          </div>
+
+          <p class="signup-text">
+            Don't have an account?
+            <a href="signup.html" class="signup-link">Sign up</a>
+          </p>
+        </form>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script src="js/login.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
 </html>
