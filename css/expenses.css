@@ -6,22 +6,67 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f8f9fa;
-    display: flex;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
 }
 
-/* Sidebar Styles */
+/* Three.js Canvas Background */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1002;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+/* Sidebar Styles - Glass Morphism */
 .sidebar {
     width: 250px;
-    background: white;
-    border-right: 1px solid #e5e7eb;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
     padding: 24px 16px;
     display: flex;
     flex-direction: column;
     position: fixed;
     height: 100vh;
     overflow-y: auto;
+    z-index: 1001;
+    transition: transform 0.3s ease;
+}
+
+.sidebar.mobile-open {
+    transform: translateX(0);
 }
 
 .logo {
@@ -35,12 +80,13 @@ body {
 .logo img {
     width: 32px;
     height: 32px;
+    filter: brightness(0) invert(1);
 }
 
 .logo span {
     font-size: 20px;
     font-weight: 700;
-    color: #1f2937;
+    color: white;
 }
 
 .nav-menu {
@@ -56,7 +102,7 @@ body {
     gap: 12px;
     padding: 12px 16px;
     border-radius: 8px;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     transition: all 0.2s;
     font-size: 14px;
@@ -68,52 +114,59 @@ body {
 }
 
 .nav-item:hover {
-    background: #f3f4f6;
-    color: #1f2937;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
 .nav-item.active {
-    background: #eff6ff;
-    color: #2563eb;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
 }
 
 .nav-item.logout {
     margin-top: auto;
-    color: #ef4444;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .nav-item.logout:hover {
-    background: #fee2e2;
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
 }
 
 /* Main Content */
 .main-content {
     margin-left: 250px;
     flex: 1;
-    padding: 24px;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    width: calc(100% - 250px);
 }
 
-/* Header */
+/* Header - Glass Morphism */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .search-bar {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: white;
-    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    padding: 10px 16px;
     border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    width: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 350px;
 }
 
 .search-bar i {
-    color: #9ca3af;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 20px;
 }
 
@@ -122,17 +175,18 @@ body {
     outline: none;
     font-size: 14px;
     flex: 1;
-    color: #1f2937;
+    background: transparent;
+    color: white;
 }
 
 .search-bar input::placeholder {
-    color: #9ca3af;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .header-right {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
 }
 
 .notification {
@@ -142,8 +196,8 @@ body {
 }
 
 .notification i {
-    font-size: 24px;
-    color: #4b5563;
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .notification-badge {
@@ -154,7 +208,7 @@ body {
     height: 8px;
     background: #ef4444;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .user-info {
@@ -170,32 +224,33 @@ body {
 }
 
 .welcome-text {
-    font-size: 12px;
-    color: #6b7280;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .user-name {
     font-size: 14px;
     font-weight: 600;
-    color: #1f2937;
+    color: white;
 }
 
 .user-avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #dbeafe;
-    color: #2563eb;
+    background: linear-gradient(135deg, #60a5fa, #2563EB);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
     font-size: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* Expenses Container */
 .expenses-container {
-    max-width: 1400px;
+    max-width: 100%;
 }
 
 .expenses-header {
@@ -203,27 +258,30 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .expenses-header h1 {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
-    color: #1f2937;
+    color: white;
     margin-bottom: 4px;
 }
 
 .expenses-header p {
     font-size: 14px;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .btn-add-expense {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #000;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
     color: white;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 12px 24px;
     border-radius: 8px;
     font-size: 14px;
@@ -233,37 +291,38 @@ body {
 }
 
 .btn-add-expense:hover {
-    background: #1f2937;
-    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
 .btn-add-expense i {
     font-size: 18px;
 }
 
-/* Total Card */
+/* Total Card - Glass Morphism */
 .total-card {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8));
+    backdrop-filter: blur(12px);
     border-radius: 16px;
-    padding: 32px;
+    padding: 28px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .total-label,
 .transactions-label {
-    font-size: 14px;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.9);
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .total-amount,
 .transactions-count {
-    font-size: 48px;
+    font-size: 40px;
     font-weight: 700;
     color: white;
 }
@@ -272,41 +331,48 @@ body {
     text-align: right;
 }
 
-/* Table */
+/* Table Container - Glass Morphism */
 .expenses-table-container {
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow-x: auto;
+}
+
+.table-wrapper {
+    overflow-x: auto;
 }
 
 .expenses-table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 600px;
 }
 
 .expenses-table thead th {
     text-align: left;
     padding: 12px 16px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    color: #6b7280;
-    border-bottom: 1px solid #e5e7eb;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .expenses-table tbody tr {
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: background 0.2s;
 }
 
 .expenses-table tbody tr:hover {
-    background: #f9fafb;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .expenses-table tbody td {
-    padding: 16px;
+    padding: 14px 16px;
     font-size: 14px;
-    color: #1f2937;
+    color: white;
 }
 
 .category-badge {
@@ -317,14 +383,14 @@ body {
     font-weight: 500;
 }
 
-.category-food { background: #dbeafe; color: #1e40af; }
-.category-transportation { background: #d1fae5; color: #065f46; }
-.category-entertainment { background: #fce7f3; color: #9f1239; }
-.category-utilities { background: #fed7aa; color: #9a3412; }
-.category-shopping { background: #fce7f3; color: #831843; }
-.category-healthcare { background: #fee2e2; color: #991b1b; }
-.category-education { background: #e0e7ff; color: #3730a3; }
-.category-other { background: #f3f4f6; color: #374151; }
+.category-food { background: rgba(59, 130, 246, 0.3); color: #bfdbfe; }
+.category-transportation { background: rgba(16, 185, 129, 0.3); color: #a7f3d0; }
+.category-entertainment { background: rgba(236, 72, 153, 0.3); color: #fbcfe8; }
+.category-utilities { background: rgba(249, 115, 22, 0.3); color: #fed7aa; }
+.category-shopping { background: rgba(168, 85, 247, 0.3); color: #e9d5ff; }
+.category-healthcare { background: rgba(239, 68, 68, 0.3); color: #fecaca; }
+.category-education { background: rgba(99, 102, 241, 0.3); color: #c7d2fe; }
+.category-other { background: rgba(156, 163, 175, 0.3); color: #e5e7eb; }
 
 .actions {
     display: flex;
@@ -345,19 +411,19 @@ body {
 }
 
 .action-btn.edit {
-    color: #2563eb;
+    color: #60a5fa;
 }
 
 .action-btn.edit:hover {
-    background: #eff6ff;
+    background: rgba(96, 165, 250, 0.2);
 }
 
 .action-btn.delete {
-    color: #ef4444;
+    color: #f87171;
 }
 
 .action-btn.delete:hover {
-    background: #fee2e2;
+    background: rgba(248, 113, 113, 0.2);
 }
 
 .empty-state {
@@ -372,16 +438,16 @@ body {
 
 .empty-state i {
     font-size: 64px;
-    color: #d1d5db;
+    color: rgba(255, 255, 255, 0.3);
     margin-bottom: 16px;
 }
 
 .empty-state p {
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.6);
     font-size: 16px;
 }
 
-/* Modal */
+/* Modal - Glass Morphism */
 .modal {
     display: none;
     position: fixed;
@@ -389,7 +455,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -400,26 +467,28 @@ body {
 }
 
 .modal-content {
-    background: white;
-    border-radius: 16px;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(16px);
+    border-radius: 20px;
     width: 90%;
     max-width: 500px;
     max-height: 90vh;
     overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 24px;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header h2 {
     font-size: 20px;
     font-weight: 600;
-    color: #1f2937;
+    color: white;
 }
 
 .close-btn {
@@ -432,12 +501,12 @@ body {
 }
 
 .close-btn:hover {
-    background: #f3f4f6;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .close-btn i {
     font-size: 24px;
-    color: #6b7280;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 #expenseForm {
@@ -450,9 +519,9 @@ body {
 
 .form-group label {
     display: block;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
-    color: #374151;
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 8px;
 }
 
@@ -460,32 +529,37 @@ body {
 .form-group select {
     width: 100%;
     padding: 12px 16px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
     font-size: 14px;
-    color: #1f2937;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
     transition: all 0.2s;
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    border-color: #60a5fa;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
 }
 
 .modal-actions {
     display: flex;
     gap: 12px;
-    padding-top: 24px;
-    border-top: 1px solid #e5e7eb;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-cancel,
 .btn-submit {
     flex: 1;
     padding: 12px 24px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -493,21 +567,151 @@ body {
 }
 
 .btn-cancel {
-    background: white;
-    color: #6b7280;
-    border: 1px solid #d1d5db;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-cancel:hover {
-    background: #f3f4f6;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .btn-submit {
-    background: #2563eb;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
     border: none;
 }
 
 .btn-submit:hover {
-    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 70px 15px 15px 15px;
+    }
+    
+    .search-bar {
+        width: 280px;
+    }
+}
+
+/* Mobile (481px - 768px) */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 65px 12px 12px 12px;
+    }
+    
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-bar {
+        width: 100%;
+    }
+    
+    .header-right {
+        justify-content: space-between;
+    }
+    
+    .expenses-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-add-expense {
+        justify-content: center;
+    }
+    
+    .total-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .total-amount, .transactions-count {
+        font-size: 32px;
+    }
+    
+    .transactions-count {
+        text-align: center;
+    }
+    
+    .expenses-header h1 {
+        font-size: 24px;
+    }
+    
+    .user-text {
+        display: none;
+    }
+    
+    .notification {
+        display: none;
+    }
+}
+
+/* Small Mobile (up to 480px) */
+@media (max-width: 480px) {
+    .main-content {
+        padding: 60px 10px 10px 10px;
+    }
+    
+    .expenses-table-container {
+        padding: 12px;
+    }
+    
+    .expenses-table thead th,
+    .expenses-table tbody td {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+    
+    .category-badge {
+        padding: 2px 8px;
+        font-size: 10px;
+    }
+    
+    .actions {
+        gap: 6px;
+    }
+    
+    .action-btn i {
+        font-size: 16px;
+    }
+    
+    .total-amount, .transactions-count {
+        font-size: 28px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .btn-cancel, .btn-submit {
+        width: 100%;
+    }
 }

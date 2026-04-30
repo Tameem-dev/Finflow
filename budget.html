@@ -2,22 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Budget Management - FinFlow</title>
     <link rel="shortcut icon" href="finflow logo (1).png" />
     <link rel="stylesheet" href="css/budget.css" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
-    <aside class="sidebar">
+    <!-- Three.js Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Mobile Menu Toggle Button -->
+    <div class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <img src="finflow logo (1).png" alt="" />
             <span>FinFlow</span>
         </div>
 
         <nav class="nav-menu">
-            <a href="dashboad.html" class="nav-item">
+            <a href="dashboard.html" class="nav-item">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
                     <rect x="11" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
@@ -52,6 +64,13 @@
                 <span>Analytics</span>
             </a>
 
+           <a href="#" class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span>AI Insights</span>
+        </a>
+
             <a href="profile.html" class="nav-item">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5" />
@@ -74,7 +93,8 @@
     <main class="main-content">
         <header class="header">
             <div class="search-bar">
-                <input type="text" placeholder="Search transactions, budgets..." />
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search budgets..." />
             </div>
 
             <div class="header-right">
@@ -89,13 +109,14 @@
         </header>
 
         <div class="budget-content">
-            <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h1>Budget Management</h1>
                     <p>Plan and track your spending across categories</p>
                 </div>
-                <button class="add-budget-btn" id="openModalBtn" style="background: #4f46e5; color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500;">
-                    + Add Category
+                <button class="add-budget-btn" id="openModalBtn">
+                    <i class="ph ph-plus"></i>
+                    Add Category
                 </button>
             </div>
 
@@ -127,35 +148,39 @@
         </div>
     </main>
 
-    <div id="budgetModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);">
-        <div class="modal-content" style="background: white; margin: 10% auto; padding: 25px; border-radius: 12px; width: 400px; position: relative;">
-            <span id="closeModalBtn" style="position: absolute; right: 20px; cursor: pointer; font-size: 20px;">✕</span>
-            <h2 style="margin-bottom: 20px">Set Budget Category</h2>
+    <div id="budgetModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Set Budget Category</h2>
+                <span id="closeModalBtn" class="close-modal-btn">&times;</span>
+            </div>
             <form id="budgetForm">
-                <div style="margin-bottom: 15px">
-                    <label style="display: block; margin-bottom: 5px">Category Name</label>
-                    <input type="text" id="catName" placeholder="e.g. Groceries" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input type="text" id="catName" placeholder="e.g., Groceries" required>
                 </div>
-                <div style="margin-bottom: 15px">
-                    <label style="display: block; margin-bottom: 5px">Amount ($)</label>
-                    <input type="number" id="catAmount" placeholder="500" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                <div class="form-group">
+                    <label>Amount ($)</label>
+                    <input type="number" id="catAmount" placeholder="500" required>
                 </div>
-                <div style="margin-bottom: 20px">
-                    <label style="display: block; margin-bottom: 5px">Color</label>
-                    <select id="catColor" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                <div class="form-group">
+                    <label>Color</label>
+                    <select id="catColor">
                         <option value="blue">Blue</option>
                         <option value="green">Green</option>
                         <option value="purple">Purple</option>
                         <option value="orange">Orange</option>
                         <option value="red">Red</option>
+                        <option value="pink">Pink</option>
+                        <option value="indigo">Indigo</option>
                     </select>
                 </div>
-                <button type="submit" style="width: 100%; background: #4f46e5; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer;">Save Budget</button>
+                <button type="submit" class="submit-budget-btn">Save Budget</button>
             </form>
         </div>
     </div>
 
-    <script src="js/budget.js"></script>
-    <script src="js/logout.js"></script>
+    <script src="js/budget.js"></script><!-- Theme JS (shared) - Add BEFORE other page-specific JS -->
+<script src="js/theme.js"></script>
 </body>
 </html>

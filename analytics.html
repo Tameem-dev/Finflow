@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Analytics - FinFlow</title>
     <link rel="stylesheet" href="css/analytics.css" />
     <link rel="shortcut icon" href="finflow logo (1).png" />
@@ -13,10 +13,22 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="css/theme.css">
   </head>
   <body>
+    <!-- Three.js Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Mobile Menu Toggle Button -->
+    <div class="mobile-menu-toggle" id="mobileMenuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
     <div class="app-container">
-      <aside class="sidebar">
+      <aside class="sidebar" id="sidebar">
         <div class="logo">
           <img src="finflow logo (1).png" alt="" />
           <span>FinFlow</span>
@@ -24,199 +36,61 @@
 
         <nav class="nav-menu">
           <a href="dashboard.html" class="nav-item">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="3"
-                y="3"
-                width="6"
-                height="6"
-                rx="1"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <rect
-                x="11"
-                y="3"
-                width="6"
-                height="6"
-                rx="1"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <rect
-                x="3"
-                y="11"
-                width="6"
-                height="6"
-                rx="1"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <rect
-                x="11"
-                y="11"
-                width="6"
-                height="6"
-                rx="1"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="11" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="3" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="11" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
             </svg>
             <span>Dashboard</span>
           </a>
 
           <a href="expenses.html" class="nav-item">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                x="3"
-                y="4"
-                width="14"
-                height="12"
-                rx="2"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <path d="M3 8H17" stroke="currentColor" stroke-width="1.5" />
-              <path
-                d="M7 12H9"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M3 8H17" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
             <span>Expenses</span>
           </a>
 
           <a href="budget.html" class="nav-item">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <path
-                d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9" stroke="currentColor" stroke-width="1.5"/>
             </svg>
             <span>Budgets</span>
           </a>
 
           <a href="#" class="nav-item active">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 16L7 12L10 15L17 8"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M17 12V8H13"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 16L7 12L10 15L17 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17 12V8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span>Analytics</span>
           </a>
 
           <a href="#" class="nav-item">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z" stroke="currentColor" stroke-width="1.5"/>
             </svg>
             <span>AI Insights</span>
           </a>
 
           <a href="profile.html" class="nav-item">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="10"
-                cy="7"
-                r="3"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <path
-                d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
             <span>Profile</span>
           </a>
         </nav>
 
         <a href="#" class="nav-item logout" id="logoutBtn">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M13 14L17 10L13 6"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M17 10H7"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-            <path
-              d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 14L17 10L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 10H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
           <span>Logout</span>
         </a>
@@ -226,44 +100,18 @@
         <!-- Header -->
         <header class="header">
           <div class="search-bar">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="9" cy="9" r="6" stroke="#9ca3af" stroke-width="1.5" />
-              <path
-                d="M13.5 13.5L17 17"
-                stroke="#9ca3af"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
+              <path d="M13.5 13.5L17 17" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
             </svg>
             <input type="text" placeholder="Search transactions, budgets..." />
           </div>
 
           <div class="header-right">
             <div class="notification">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10 3C7.23858 3 5 5.23858 5 8V11L3 14H17L15 11V8C15 5.23858 12.7614 3 10 3Z"
-                  stroke="#4b5563"
-                  stroke-width="1.5"
-                />
-                <path
-                  d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14"
-                  stroke="#4b5563"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                />
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 3C7.23858 3 5 5.23858 5 8V11L3 14H17L15 11V8C15 5.23858 12.7614 3 10 3Z" stroke="#4b5563" stroke-width="1.5"/>
+                <path d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14" stroke="#4b5563" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
               <span class="notification-badge"></span>
             </div>
@@ -295,32 +143,28 @@
           <div class="stats-grid">
             <div class="stat-card">
               <div class="stat-header">
-                <span>Avg. Income</span
-                ><i class="ph ph-trend-up icon-green"></i>
+                <span>Avg. Income</span><i class="ph ph-trend-up icon-green"></i>
               </div>
               <h2>$4,567</h2>
               <p class="stat-trend trend-up">+8.2% vs last period</p>
             </div>
             <div class="stat-card">
               <div class="stat-header">
-                <span>Avg. Expenses</span
-                ><i class="ph ph-trend-down icon-red"></i>
+                <span>Avg. Expenses</span><i class="ph ph-trend-down icon-red"></i>
               </div>
               <h2>$3,350</h2>
               <p class="stat-trend trend-down">+5.4% vs last period</p>
             </div>
             <div class="stat-card">
               <div class="stat-header">
-                <span>Avg. Savings</span
-                ><i class="ph ph-currency-dollar icon-blue"></i>
+                <span>Avg. Savings</span><i class="ph ph-currency-dollar icon-blue"></i>
               </div>
               <h2>$1,217</h2>
               <p class="stat-trend trend-blue">+12.5% vs last period</p>
             </div>
             <div class="stat-card">
               <div class="stat-header">
-                <span>Savings Rate</span
-                ><i class="ph ph-chart-line-up icon-purple"></i>
+                <span>Savings Rate</span><i class="ph ph-chart-line-up icon-purple"></i>
               </div>
               <h2>26.6%</h2>
               <p class="stat-trend trend-purple">Excellent progress</p>
@@ -344,12 +188,7 @@
               <div class="card chart-card expense-chart-card">
                 <h3>Expense by Category</h3>
                 <div class="expense-chart-container">
-                  <svg
-                    id="expensePieChart"
-                    width="600"
-                    height="500"
-                    viewBox="0 0 600 500"
-                  ></svg>
+                  <svg id="expensePieChart" width="100%" height="500" viewBox="0 0 600 500" preserveAspectRatio="xMidYMid meet"></svg>
                   <div id="expenseTooltip" class="expense-tooltip"></div>
                 </div>
               </div>
@@ -364,50 +203,30 @@
               </div>
               <div class="insight-item">
                 <div class="insight-header">
-                  <i class="ph ph-trend-up green"></i
-                  ><strong>Positive Trend</strong>
+                  <i class="ph ph-trend-up green"></i><strong>Positive Trend</strong>
                 </div>
-                <p>
-                  Your cash flow has increased by 295% over the last 6 month.
-                  you're consistently saving $1,100+ per month, which is
-                  excellent financial discipline.
-                </p>
+                <p>Your cash flow has increased by 295% over the last 6 months. you're consistently saving $1,100+ per month, which is excellent financial discipline.</p>
               </div>
 
               <div class="insight-item">
                 <div class="insight-header">
-                  <i class="ph ph-currency-dollar green"></i
-                  ><strong>Spending Patterns</strong>
+                  <i class="ph ph-currency-dollar green"></i><strong>Spending Patterns</strong>
                 </div>
-                <p>
-                  Your top spending categories are Shopping (23%) and Food &
-                  Dining (28%). Consider setting stricter budgets in these areas
-                  to maximize savings.
-                </p>
+                <p>Your top spending categories are Shopping (23%) and Food & Dining (28%). Consider setting stricter budgets in these areas to maximize savings.</p>
               </div>
 
               <div class="insight-item">
                 <div class="insight-header">
-                  <i class="ph-fill ph-brain"></i
-                  ><strong>AI Recomendation</strong>
+                  <i class="ph-fill ph-brain"></i><strong>AI Recommendation</strong>
                 </div>
-                <p>
-                  Based on your income growth pattern, you could increase your
-                  monthly savings goal by 15% without impacting your lifestyle.
-                  This would add an extra $165/month to your savings.
-                </p>
+                <p>Based on your income growth pattern, you could increase your monthly savings goal by 15% without impacting your lifestyle. This would add an extra $165/month to your savings.</p>
               </div>
 
               <div class="insight-item">
                 <div class="insight-header">
-                  <i class="ph ph-trend-down green"></i
-                  ><strong>Watch Out</strong>
+                  <i class="ph ph-trend-down green"></i><strong>Watch Out</strong>
                 </div>
-                <p>
-                  Your Entertainment spending exceeded budget by 25% this month.
-                  Consider finding free or lower-cost entertainment alternatives
-                  to stay on track.
-                </p>
+                <p>Your Entertainment spending exceeded budget by 25% this month. Consider finding free or lower-cost entertainment alternatives to stay on track.</p>
               </div>
 
               <div class="score-card">
@@ -423,7 +242,7 @@
         </div>
       </main>
     </div>
-    <script src="js/analytics.js"></script>
-    <script src="js/logout.js"></script>
+    <script src="js/analytics.js"></script><!-- Theme JS (shared) - Add BEFORE other page-specific JS -->
+<script src="js/theme.js"></script>
   </body>
 </html>

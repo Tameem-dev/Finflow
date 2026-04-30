@@ -1,0 +1,203 @@
+/* ============================================
+   SHARED THEME STYLES - Apply to all pages
+   ============================================ */
+
+/* Light Theme Base (Default - Glass Morphism) */
+body.light-theme {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body.light-theme .sidebar {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.light-theme .logo span,
+body.light-theme .nav-item,
+body.light-theme .nav-item.active,
+body.light-theme .user-name,
+body.light-theme .page-header h1,
+body.light-theme .card-header h3,
+body.light-theme .setting-text strong,
+body.light-theme .features-title,
+body.light-theme .profile-user-name,
+body.light-theme .amount,
+body.light-theme .total-amount,
+body.light-theme .transactions-count,
+body.light-theme .stat-card h2,
+body.light-theme .budget-category-card h3,
+body.light-theme .t-title,
+body.light-theme .b-header {
+    color: white;
+}
+
+body.light-theme .nav-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+body.light-theme .card,
+body.light-theme .stat-card,
+body.light-theme .budget-category-card,
+body.light-theme .expenses-table-container,
+body.light-theme .analytics-layout .card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.light-theme input,
+body.light-theme select,
+body.light-theme .search-bar {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+body.light-theme input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+body.light-theme .btn-black,
+body.light-theme .btn-primary,
+body.light-theme .signup-btn,
+body.light-theme .login-button,
+body.light-theme .forgot-button,
+body.light-theme .btn-add-expense {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+body.light-theme .header {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.light-theme .expenses-table thead th,
+body.light-theme .expenses-table tbody td,
+body.light-theme .category-badge {
+    color: white;
+}
+
+body.light-theme .category-badge {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.light-theme .page-header p,
+body.light-theme .hero-description,
+body.light-theme .welcome-text,
+body.light-theme .stat-header,
+body.light-theme .t-meta,
+body.light-theme .b-values,
+body.light-theme .usage-text {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Dark Theme Base */
+body.dark-theme {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+}
+
+body.dark-theme .sidebar {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .logo span,
+body.dark-theme .nav-item,
+body.dark-theme .user-name,
+body.dark-theme .page-header h1,
+body.dark-theme .card-header h3,
+body.dark-theme .setting-text strong,
+body.dark-theme .features-title,
+body.dark-theme .profile-user-name,
+body.dark-theme .amount,
+body.dark-theme .total-amount,
+body.dark-theme .transactions-count,
+body.dark-theme .stat-card h2,
+body.dark-theme .budget-category-card h3,
+body.dark-theme .t-title,
+body.dark-theme .b-header {
+    color: #f3f4f6;
+}
+
+body.dark-theme .nav-item.active {
+    background-color: rgba(37, 99, 235, 0.3);
+    color: #60a5fa;
+}
+
+body.dark-theme .card,
+body.dark-theme .stat-card,
+body.dark-theme .budget-category-card,
+body.dark-theme .expenses-table-container,
+body.dark-theme .analytics-layout .card {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme .search-bar {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f3f4f6;
+}
+
+body.dark-theme input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-theme .btn-black,
+body.dark-theme .btn-primary,
+body.dark-theme .signup-btn,
+body.dark-theme .login-button,
+body.dark-theme .forgot-button,
+body.dark-theme .btn-add-expense {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+body.dark-theme .header {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .expenses-table thead th,
+body.dark-theme .expenses-table tbody td {
+    color: #f3f4f6;
+}
+
+body.dark-theme .category-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f3f4f6;
+}
+
+body.dark-theme .page-header p,
+body.dark-theme .hero-description,
+body.dark-theme .welcome-text,
+body.dark-theme .stat-header,
+body.dark-theme .t-meta,
+body.dark-theme .b-values,
+body.dark-theme .usage-text {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Smooth transitions for all elements */
+body,
+.sidebar,
+.header,
+.card,
+.nav-item,
+.search-bar,
+input,
+.btn-black,
+.theme-option,
+.stat-card,
+.budget-category-card,
+.expenses-table-container,
+.category-badge {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+}

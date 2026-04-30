@@ -1,8 +1,147 @@
+// ========== THREE.JS ANIMATED BACKGROUND ==========
+const canvas = document.createElement('canvas');
+canvas.id = 'bg-canvas';
+document.body.insertBefore(canvas, document.body.firstChild);
+
+const scene = new THREE.Scene();
+scene.background = null;
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 0, 15);
+
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+
+// Create floating particles
+const particlesGeometry = new THREE.BufferGeometry();
+const particlesCount = 1800;
+const posArray = new Float32Array(particlesCount * 3);
+
+for (let i = 0; i < particlesCount * 3; i += 3) {
+    posArray[i] = (Math.random() - 0.5) * 55;
+    posArray[i + 1] = (Math.random() - 0.5) * 35;
+    posArray[i + 2] = (Math.random() - 0.5) * 45 - 20;
+}
+
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+const particlesMaterial = new THREE.PointsMaterial({
+    size: 0.07,
+    color: 0x60a5fa,
+    transparent: true,
+    opacity: 0.5,
+    blending: THREE.AdditiveBlending
+});
+
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particlesMesh);
+
+// Create floating torus knot
+const knotGeometry = new THREE.TorusKnotGeometry(1.1, 0.32, 180, 24, 3, 4);
+const knotMaterial = new THREE.MeshStandardMaterial({
+    color: 0x818cf8,
+    emissive: 0x312e81,
+    roughness: 0.3,
+    metalness: 0.7,
+    transparent: true,
+    opacity: 0.35
+});
+const torusKnot = new THREE.Mesh(knotGeometry, knotMaterial);
+torusKnot.position.set(3, 2, -11);
+scene.add(torusKnot);
+
+// Create floating spheres
+const sphereGeometry = new THREE.SphereGeometry(0.65, 32, 32);
+const sphereMaterial = new THREE.MeshStandardMaterial({
+    color: 0xa78bfa,
+    emissive: 0x4c1d95,
+    transparent: true,
+    opacity: 0.3,
+    roughness: 0.2,
+    metalness: 0.8
+});
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.position.set(-2.8, -1.2, -9);
+scene.add(sphere);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0x404060);
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(5, 5, 5);
+scene.add(directionalLight);
+
+const backLight = new THREE.PointLight(0x3b82f6, 0.6);
+backLight.position.set(-2, 1, -7);
+scene.add(backLight);
+
+// Animation
+let time = 0;
+
+function animate() {
+    requestAnimationFrame(animate);
+    time += 0.008;
+
+    particlesMesh.rotation.y = time * 0.1;
+    particlesMesh.rotation.x = Math.sin(time * 0.2) * 0.1;
+
+    torusKnot.rotation.x = time * 0.4;
+    torusKnot.rotation.y = time * 0.6;
+    torusKnot.position.y = 2 + Math.sin(time * 0.8) * 0.2;
+
+    sphere.rotation.x = time * 0.3;
+    sphere.rotation.y = time * 0.5;
+
+    camera.position.x = Math.sin(time * 0.1) * 0.2;
+    camera.position.y = Math.cos(time * 0.15) * 0.1;
+    camera.lookAt(0, 0, -2);
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ========== MOBILE MENU FUNCTIONALITY ==========
+const mobileToggle = document.getElementById('mobileMenuToggle');
+const sidebar = document.getElementById('sidebar');
+
+if (mobileToggle) {
+    mobileToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('mobile-open');
+    });
+}
+
+// Close sidebar when clicking outside on mobile
+document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 1024) {
+        if (sidebar && !sidebar.contains(e.target) && mobileToggle && !mobileToggle.contains(e.target)) {
+            sidebar.classList.remove('mobile-open');
+        }
+    }
+});
+
+// ========== ANALYTICS FUNCTIONALITY ==========
 document.addEventListener("DOMContentLoaded", () => {
     // 1. AUTH GUARD - Kick out if not logged in
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     if (isLoggedIn !== "true") {
-        window.location.href = "login.html";
+        Swal.fire({
+            icon: 'warning',
+            title: 'Not Logged In',
+            text: 'Please login to access analytics',
+            confirmButtonColor: '#4f46e5'
+        }).then(() => {
+            window.location.href = "login.html";
+        });
         return;
     }
 
@@ -17,23 +156,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const avatarElement = document.querySelector(".user-avatar");
     if (avatarElement) avatarElement.textContent = initial;
 
-    const pageHeaderP = document.querySelector(".page-header p");
-    if (pageHeaderP) {
-        pageHeaderP.textContent = `Welcome back, ${storedName.split(' ')[0]}! Here's your financial overview.`;
-    }
-
-     const logoutBtn = document.getElementById("logout");
+    // Logout functionality
+    const logoutBtn = document.getElementById("logoutBtn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            if (confirm("Are you sure you want to logout?")) {
-                localStorage.setItem("isLoggedIn", "false");
-                window.location.href = "login.html";
-            }
+            Swal.fire({
+                title: 'Logout?',
+                text: 'Are you sure you want to logout?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Yes, logout'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('userEmail');
+                    localStorage.removeItem('userName');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Logged Out!',
+                        text: 'Redirecting to login page...',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = "login.html";
+                    });
+                }
+            });
         });
     }
 
-     const searchInput = document.querySelector(".search-bar input");
+    const searchInput = document.querySelector(".search-bar input");
     if (searchInput) {
         searchInput.addEventListener("input", (e) => {
             console.log("Searching for:", e.target.value);
@@ -41,60 +196,90 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
 // 1. Income vs Expenses Bar Chart
-const ctx1 = document.getElementById('incomeExpensesChart').getContext('2d');
-new Chart(ctx1, {
-    type: 'bar',
-    data: {
-        labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-            label: 'Income',
-            data: [4200, 4500, 4200, 4800, 4500, 5200],
-            backgroundColor: '#10b981',
-            borderRadius: 6
-        }, {
-            label: 'Expenses',
-            data: [3100, 3400, 2900, 3600, 3300, 3800],
-            backgroundColor: '#ef4444',
-            borderRadius: 6
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } }
-    }
-});
+const ctx1 = document.getElementById('incomeExpensesChart');
+if (ctx1) {
+    new Chart(ctx1.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Income',
+                data: [4200, 4500, 4200, 4800, 4500, 5200],
+                backgroundColor: '#4ade80',
+                borderRadius: 6
+            }, {
+                label: 'Expenses',
+                data: [3100, 3400, 2900, 3600, 3300, 3800],
+                backgroundColor: '#f87171',
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { 
+                    position: 'bottom',
+                    labels: { color: 'white' }
+                } 
+            },
+            scales: {
+                y: {
+                    ticks: { color: 'rgba(255,255,255,0.7)' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                },
+                x: {
+                    ticks: { color: 'rgba(255,255,255,0.7)' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                }
+            }
+        }
+    });
+}
 
 // 2. Cash Flow Line Chart
-const ctx2 = document.getElementById('cashFlowChart').getContext('2d');
-new Chart(ctx2, {
-    type: 'line',
-    data: {
-        labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-            label: 'Balance',
-            data: [2100, 3200, 4500, 5800, 7000, 8400],
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 6,
-            pointBackgroundColor: '#3b82f6'
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom' } }
-    }
-});
+const ctx2 = document.getElementById('cashFlowChart');
+if (ctx2) {
+    new Chart(ctx2.getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Balance',
+                data: [2100, 3200, 4500, 5800, 7000, 8400],
+                borderColor: '#60a5fa',
+                backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 6,
+                pointBackgroundColor: '#60a5fa'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { 
+                legend: { 
+                    position: 'bottom',
+                    labels: { color: 'white' }
+                } 
+            },
+            scales: {
+                y: {
+                    ticks: { color: 'rgba(255,255,255,0.7)' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                },
+                x: {
+                    ticks: { color: 'rgba(255,255,255,0.7)' },
+                    grid: { color: 'rgba(255,255,255,0.1)' }
+                }
+            }
+        }
+    });
+}
 
-
-
-       
-        // Expense Pie Chart with unique naming
+// Expense Pie Chart
 const expenseData = [
     { category: 'Food & Dining', percentage: 23, color: '#4A90E2', amount: 414 },
     { category: 'Utilities', percentage: 16, color: '#FF6B35', amount: 288 },
@@ -136,15 +321,19 @@ function createExpensePieSlice(startAngle, endAngle, color, index, item) {
                 slice.classList.add('faded');
             }
         });
-        expenseTooltip.textContent = `${item.category}: $${item.amount}`;
-        expenseTooltip.classList.add('show');
+        if (expenseTooltip) {
+            expenseTooltip.textContent = `${item.category}: $${item.amount}`;
+            expenseTooltip.classList.add('show');
+        }
     });
 
     path.addEventListener('mouseleave', () => {
         document.querySelectorAll('.expense-pie-slice').forEach(slice => {
             slice.classList.remove('faded');
         });
-        expenseTooltip.classList.remove('show');
+        if (expenseTooltip) {
+            expenseTooltip.classList.remove('show');
+        }
     });
 
     return path;
@@ -195,23 +384,27 @@ function createExpenseLabel(angle, text, color) {
 }
 
 // Draw the expense chart
-let currentExpenseAngle = 0;
+if (expenseSvg) {
+    let currentExpenseAngle = 0;
 
-expenseData.forEach((item, index) => {
-    const sliceAngle = (item.percentage / 100) * 360;
-    const midAngle = currentExpenseAngle + sliceAngle / 2;
+    expenseData.forEach((item, index) => {
+        const sliceAngle = (item.percentage / 100) * 360;
+        const midAngle = currentExpenseAngle + sliceAngle / 2;
 
-    // Create pie slice
-    const slice = createExpensePieSlice(currentExpenseAngle, currentExpenseAngle + sliceAngle, item.color, index, item);
-    expenseSvg.appendChild(slice);
+        // Create pie slice
+        const slice = createExpensePieSlice(currentExpenseAngle, currentExpenseAngle + sliceAngle, item.color, index, item);
+        expenseSvg.appendChild(slice);
 
-    // Create label line
-    const line = createExpenseLabelLine(currentExpenseAngle, currentExpenseAngle + sliceAngle, item.color);
-    expenseSvg.appendChild(line);
+        // Create label line
+        const line = createExpenseLabelLine(currentExpenseAngle, currentExpenseAngle + sliceAngle, item.color);
+        expenseSvg.appendChild(line);
 
-    // Create label
-    const label = createExpenseLabel(midAngle, `${item.category} ${item.percentage}%`, item.color);
-    expenseSvg.appendChild(label);
+        // Create label
+        const label = createExpenseLabel(midAngle, `${item.category} ${item.percentage}%`, item.color);
+        expenseSvg.appendChild(label);
 
-    currentExpenseAngle += sliceAngle;
-});
+        currentExpenseAngle += sliceAngle;
+    });
+}
+
+console.log('Analytics page loaded with Three.js, Glass Morphism, and Mobile Responsiveness!');
