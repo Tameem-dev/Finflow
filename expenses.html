@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Expenses - FinFlow</title>
     <link rel="stylesheet" href="css/expenses.css">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="shortcut icon" href="finflow logo (1).png" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -51,7 +52,7 @@
                 <span>Analytics</span>
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="ai-insights.html" class="nav-item">
                 <i class="ph ph-sparkle"></i>
                 <span>AI Insights</span>
             </a>
@@ -70,30 +71,46 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Header -->
+        <!-- Header - Updated to Dashboard Style -->
         <header class="header">
-            <div class="search-bar">
-                <i class="ph ph-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Search transactions, budgets..." />
+    <div class="search-bar">
+        <i class="ph ph-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search expenses..." />
+        <span class="search-shortcut">⌘K</span>
+    </div>
+
+    <div class="header-right">
+        <div class="date-range" id="dateRangeBtn">
+            <i class="ph ph-calendar"></i>
+            <span id="selectedRange">This Month</span>
+            <i class="ph ph-caret-down"></i>
+        </div>
+
+        <div class="notification" id="notificationBtn" style="position:relative;cursor:pointer;">
+    <i class="ph ph-bell" style="font-size:20px;color:white;"></i>
+    <span class="notification-badge" id="notificationCount" style="position:absolute;top:-5px;right:-8px;background:#ef4444;color:white;font-size:10px;border-radius:50%;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;"></span>
+</div>
+<div class="notification-dropdown" id="notificationDropdown">
+    <div class="notification-header">
+        <h3>Notifications</h3>
+        <button class="mark-all-read" id="markAllReadBtn">Mark all read</button>
+    </div>
+    <div class="notifications-list" id="notificationsList"></div>
+</div>
+
+        <div class="user-info" id="userMenuBtn">
+            <div class="user-avatar" id="headerAvatar">U</div>
+            <div class="user-text">
+                <span class="welcome-text">Welcome back,</span>
+                <span class="user-name" id="headerUserName">User</span>
             </div>
+            <i class="ph ph-caret-down"></i>
+        </div>
+    </div>
+</header>
 
-            <div class="header-right">
-                <div class="notification">
-                    <i class="ph ph-bell"></i>
-                    <span class="notification-badge"></span>
-                </div>
 
-                <div class="user-info">
-                    <div class="user-text">
-                        <span class="welcome-text">Welcome back,</span>
-                        <span class="user-name"></span>
-                    </div>
-                    <div class="user-avatar" id="userAvatar">J</div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Expenses Section -->
+        <!-- Expenses Section (YOUR ORIGINAL CODE - UNCHANGED) -->
         <div class="expenses-container">
             <div class="expenses-header">
                 <div>
@@ -194,7 +211,8 @@
         </div>
     </div>
 
-    <script src="js/expenses.js"></script><!-- Theme JS (shared) - Add BEFORE other page-specific JS -->
-<script src="js/theme.js"></script>
+    <script src="js/expenses.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/notifications.js"></script>
 </body>
 </html>

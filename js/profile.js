@@ -120,7 +120,6 @@ if (mobileToggle) {
     });
 }
 
-// Close sidebar when clicking outside on mobile
 document.addEventListener('click', (e) => {
     if (window.innerWidth <= 1024) {
         if (sidebar && !sidebar.contains(e.target) && mobileToggle && !mobileToggle.contains(e.target)) {
@@ -129,140 +128,280 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// ========== THEME MANAGEMENT (FULLY WORKING) ==========
+// ========== HELPER FUNCTIONS ==========
 
-// Theme CSS that will be applied dynamically
+function getCurrentUserEmail() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser ? currentUser.email : null;
+}
+
+function getTotalExpenses() {
+    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    return expenses.reduce((sum, exp) => sum + exp.amount, 0);
+}
+
+function getTransactionCount() {
+    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    return expenses.length;
+}
+
+function getAccountType() {
+    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+    const transactionCount = expenses.length;
+    
+    if (totalExpenses > 10000 || transactionCount > 50) {
+        return { type: 'Premium', class: 'highlight-blue' };
+    } else if (totalExpenses > 5000 || transactionCount > 25) {
+        return { type: 'Pro', class: 'highlight-purple' };
+    } else if (totalExpenses > 1000 || transactionCount > 10) {
+        return { type: 'Standard', class: 'highlight-green' };
+    } else {
+        return { type: 'Free', class: 'highlight-gray' };
+    }
+}
+
+function getMemberSince() {
+    let memberDate = localStorage.getItem('memberSince');
+    if (!memberDate) {
+        memberDate = new Date().toISOString();
+        localStorage.setItem('memberSince', memberDate);
+    }
+    const date = new Date(memberDate);
+    return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
+function updateAccountStats() {
+    const memberSinceEl = document.getElementById('memberSince');
+    if (memberSinceEl) memberSinceEl.textContent = getMemberSince();
+    
+    const accountType = getAccountType();
+    const accountTypeEl = document.getElementById('accountType');
+    if (accountTypeEl) {
+        accountTypeEl.textContent = accountType.type;
+        accountTypeEl.className = `value ${accountType.class}`;
+    }
+    
+    const aiToggle = document.getElementById('aiToggle');
+    const aiStatusEl = document.getElementById('aiStatus');
+    if (aiStatusEl && aiToggle) {
+        aiStatusEl.textContent = aiToggle.checked ? 'Enabled' : 'Disabled';
+        aiStatusEl.className = aiToggle.checked ? 'value highlight-green' : 'value highlight-gray';
+    }
+    
+    const totalExpenses = getTotalExpenses();
+    const totalExpensesEl = document.getElementById('totalExpensesCount');
+    if (totalExpensesEl) {
+        totalExpensesEl.textContent = `$${totalExpenses.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+    
+    const transactionCount = getTransactionCount();
+    const totalTransactionsEl = document.getElementById('totalTransactionsCount');
+    if (totalTransactionsEl) totalTransactionsEl.textContent = transactionCount;
+}
+
+// ========== PASSWORD TOGGLE FUNCTIONS ==========
+
+// Generic password toggle function
+function setupPasswordToggle(inputId, buttonId) {
+    const input = document.getElementById(inputId);
+    const button = document.getElementById(buttonId);
+    
+    if (!input || !button) return;
+    
+    let isVisible = false;
+    const eyeIcon = button.querySelector('i');
+    
+    button.addEventListener('click', () => {
+        isVisible = !isVisible;
+        
+        if (isVisible) {
+    input.type = 'text';
+    if (eyeIcon) {
+        eyeIcon.className = 'ph ph-eye';
+    }
+    button.style.color = '#3b82f6';  // Blue color
+} else {
+    input.type = 'password';
+    if (eyeIcon) {
+        eyeIcon.className = 'ph ph-eye-slash';
+    }
+    button.style.color = '#3b82f6';  // Blue color
+}
+    });
+}
+
+// Load user password for display
+function loadUserPassword() {
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) return '';
+    
+    const users = JSON.parse(localStorage.getItem('finflow_users')) || [];
+    const currentUser = users.find(u => u.email === userEmail);
+    return currentUser ? currentUser.password : '';
+}
+
+function updateUserPassword(newPassword) {
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) return false;
+    
+    const users = JSON.parse(localStorage.getItem('finflow_users')) || [];
+    const userIndex = users.findIndex(u => u.email === userEmail);
+    
+    if (userIndex !== -1) {
+        users[userIndex].password = newPassword;
+        localStorage.setItem('finflow_users', JSON.stringify(users));
+        return true;
+    }
+    return false;
+}
+
+// ========== SETUP ALL PASSWORD TOGGLES ==========
+
+// Setup password display toggle
+setupPasswordToggle('passwordDisplay', 'togglePasswordBtn');
+
+// Setup current password toggle in update section
+setupPasswordToggle('currentPassword', 'toggleCurrentPasswordBtn');
+
+// Setup new password toggle in update section
+setupPasswordToggle('newPassword', 'toggleNewPasswordBtn');
+
+// Also set the actual password value for display
+const passwordDisplayInput = document.getElementById('passwordDisplay');
+const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+
+if (passwordDisplayInput) {
+    const actualPassword = loadUserPassword();
+    passwordDisplayInput.value = '••••••••';
+    passwordDisplayInput.dataset.actualPassword = actualPassword;
+    
+    // Override the toggle for password display to show actual password
+    if (togglePasswordBtn) {
+        let isPasswordVisible = false;
+        const eyeIcon = togglePasswordBtn.querySelector('i');
+        
+        togglePasswordBtn.addEventListener('click', () => {
+            isPasswordVisible = !isPasswordVisible;
+            
+            if (isPasswordVisible) {
+                passwordDisplayInput.value = passwordDisplayInput.dataset.actualPassword || '';
+                passwordDisplayInput.type = 'text';
+                if (eyeIcon) eyeIcon.className = 'ph ph-eye';
+                togglePasswordBtn.style.color = '#4ade80';
+            } else {
+                passwordDisplayInput.value = '••••••••';
+                passwordDisplayInput.type = 'password';
+                if (eyeIcon) eyeIcon.className = 'ph ph-eye-slash';
+                togglePasswordBtn.style.color = '#60a5fa';
+            }
+        });
+    }
+}
+
+// ========== HEADER FUNCTIONALITY ==========
+
+const headerUserName = document.getElementById('headerUserName');
+const headerAvatar = document.getElementById('headerAvatar');
+const storedNameHeader = localStorage.getItem('userName') || 'User';
+
+if (headerUserName) headerUserName.textContent = storedNameHeader;
+if (headerAvatar) headerAvatar.textContent = storedNameHeader.charAt(0).toUpperCase();
+
+// Date Range Selector
+const dateRangeBtn = document.getElementById('dateRangeBtn');
+const selectedRangeSpan = document.getElementById('selectedRange');
+
+if (dateRangeBtn) {
+    dateRangeBtn.addEventListener('click', () => {
+        Swal.fire({
+            title: 'Select Date Range',
+            html: `
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="swal2-btn" data-range="Today" style="padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; cursor: pointer;">Today</button>
+                    <button class="swal2-btn" data-range="This Week" style="padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; cursor: pointer;">This Week</button>
+                    <button class="swal2-btn" data-range="This Month" style="padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; cursor: pointer;">This Month</button>
+                    <button class="swal2-btn" data-range="This Year" style="padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; cursor: pointer;">This Year</button>
+                </div>
+            `,
+            showConfirmButton: false,
+            background: '#0a0e27',
+            color: '#fff',
+            didOpen: () => {
+                document.querySelectorAll('.swal2-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const range = btn.dataset.range;
+                        if (selectedRangeSpan) selectedRangeSpan.textContent = range;
+                        Swal.close();
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${range} Selected`,
+                            timer: 1000,
+                            showConfirmButton: false,
+                            background: '#0a0e27',
+                            color: '#fff',
+                            iconColor: '#3b82f6'
+                        });
+                    });
+                });
+            }
+        });
+    });
+}
+
+// User menu click
+const userMenuBtn = document.getElementById('userMenuBtn');
+if (userMenuBtn) {
+    userMenuBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// Search keyboard shortcut
+const searchInputField = document.getElementById('searchInput');
+if (searchInputField) {
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            searchInputField.focus();
+        }
+    });
+}
+
+// ========== THEME MANAGEMENT ==========
+
 const themeStyles = `
-    /* Light Theme (Default - Glass Morphism) */
-    body.light-theme {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
+    body.light-theme { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    body.light-theme .sidebar { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); }
+    body.light-theme .logo span, body.light-theme .nav-item, body.light-theme .user-name,
+    body.light-theme .page-header h1, body.light-theme .card-header h3, body.light-theme .setting-text strong,
+    body.light-theme .features-title, body.light-theme .profile-user-name { color: white; }
+    body.light-theme .card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); }
+    body.light-theme input { background: rgba(255, 255, 255, 0.1); color: white; }
+    body.light-theme .btn-black { background: linear-gradient(135deg, #3b82f6, #2563eb); }
     
-    body.light-theme .sidebar {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(12px);
-        border-right: 1px solid rgba(255, 255, 255, 0.2);
-    }
+    body.dark-theme { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%); }
+    body.dark-theme .sidebar { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); }
+    body.dark-theme .logo span, body.dark-theme .nav-item, body.dark-theme .user-name,
+    body.dark-theme .page-header h1, body.dark-theme .card-header h3, body.dark-theme .setting-text strong,
+    body.dark-theme .features-title, body.dark-theme .profile-user-name { color: #f3f4f6; }
+    body.dark-theme .nav-item.active { background-color: rgba(37, 99, 235, 0.3); color: #60a5fa; }
+    body.dark-theme .card { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(12px); }
+    body.dark-theme input { background: rgba(0, 0, 0, 0.3); color: #f3f4f6; }
+    body.dark-theme .btn-black { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
     
-    body.light-theme .logo span,
-    body.light-theme .nav-item,
-    body.light-theme .nav-item.active,
-    body.light-theme .user-name,
-    body.light-theme .page-header h1,
-    body.light-theme .card-header h3,
-    body.light-theme .setting-text strong,
-    body.light-theme .features-title,
-    body.light-theme .profile-user-name {
-        color: white;
-    }
-    
-    body.light-theme .nav-item.active {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-    
-    body.light-theme .card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    body.light-theme input {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: white;
-    }
-    
-    body.light-theme .btn-black {
-        background: linear-gradient(135deg, #3b82f6, #2563eb);
-    }
-    
-    /* Dark Theme */
-    body.dark-theme {
-        background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
-    }
-    
-    body.dark-theme .sidebar {
-        background: rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(12px);
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    body.dark-theme .logo span,
-    body.dark-theme .nav-item,
-    body.dark-theme .user-name,
-    body.dark-theme .page-header h1,
-    body.dark-theme .card-header h3,
-    body.dark-theme .setting-text strong,
-    body.dark-theme .features-title,
-    body.dark-theme .profile-user-name {
-        color: #f3f4f6;
-    }
-    
-    body.dark-theme .nav-item.active {
-        background-color: rgba(37, 99, 235, 0.3);
-        color: #60a5fa;
-    }
-    
-    body.dark-theme .card {
-        background: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    body.dark-theme input {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #f3f4f6;
-    }
-    
-    body.dark-theme input::placeholder {
-        color: rgba(255, 255, 255, 0.3);
-    }
-    
-    body.dark-theme .btn-black {
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    }
-    
-    body.dark-theme .ai-toggle-box {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
-    
-    body.dark-theme .setting-item {
-        border-bottom-color: rgba(255, 255, 255, 0.05);
-    }
-    
-    body.dark-theme .danger-card {
-        border-color: rgba(239, 68, 68, 0.3) !important;
-    }
-    
-    body.dark-theme .danger-item {
-        background-color: rgba(239, 68, 68, 0.1);
-    }
-    
-    body.dark-theme .verified-badge {
-        background-color: rgba(6, 78, 59, 0.3);
-    }
-    
-    body.dark-theme .user-email,
-    body.dark-theme .detail-row .label,
-    body.dark-theme .setting-text p,
-    body.dark-theme .ai-toggle-content p,
-    body.dark-theme .page-header p,
-    body.dark-theme .badge-text span {
-        color: rgba(255, 255, 255, 0.6);
-    }
+    .highlight-blue { color: #60a5fa; }
+    .highlight-green { color: #4ade80; }
+    .highlight-purple { color: #a855f7; }
+    .highlight-gray { color: #9ca3af; }
 `;
 
-// Inject theme styles
 const styleSheet = document.createElement("style");
 styleSheet.textContent = themeStyles;
 document.head.appendChild(styleSheet);
 
-// Theme Management Functions
 function applyTheme(theme, saveToStorage = true) {
     const body = document.body;
-    
-    // Remove existing theme classes
     body.classList.remove('light-theme', 'dark-theme');
     
     if (theme === 'dark') {
@@ -272,45 +411,27 @@ function applyTheme(theme, saveToStorage = true) {
         body.classList.add('light-theme');
         if (saveToStorage) localStorage.setItem('theme', 'light');
     } else if (theme === 'auto') {
-        // Auto mode: follow system preference
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) {
-            body.classList.add('dark-theme');
-        } else {
-            body.classList.add('light-theme');
-        }
+        body.classList.add(prefersDark ? 'dark-theme' : 'light-theme');
         if (saveToStorage) localStorage.setItem('theme', 'auto');
     }
     
-    // Update active state on theme options
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         const optionTheme = option.getAttribute('data-theme');
-        if (optionTheme === theme) {
-            option.classList.add('active');
-        } else {
-            option.classList.remove('active');
-        }
+        option.classList.toggle('active', optionTheme === theme);
     });
 }
 
-// Listen for system preference changes when in auto mode
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'auto') {
-        if (e.matches) {
-            document.body.classList.add('dark-theme');
-            document.body.classList.remove('light-theme');
-        } else {
-            document.body.classList.add('light-theme');
-            document.body.classList.remove('dark-theme');
-        }
+    if (localStorage.getItem('theme') === 'auto') {
+        document.body.classList.toggle('dark-theme', e.matches);
+        document.body.classList.toggle('light-theme', !e.matches);
     }
 });
 
 // ========== PROFILE PAGE FUNCTIONALITY ==========
 document.addEventListener("DOMContentLoaded", () => {
-    // Auth Guard
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const storedName = localStorage.getItem("userName");
     const storedEmail = localStorage.getItem("userEmail");
@@ -320,7 +441,9 @@ document.addEventListener("DOMContentLoaded", () => {
             icon: 'warning',
             title: 'Not Logged In',
             text: 'Please login to access your profile',
-            confirmButtonColor: '#4f46e5'
+            confirmButtonColor: '#4f46e5',
+            background: '#0a0e27',
+            color: '#fff'
         }).then(() => {
             window.location.href = "login.html";
         });
@@ -342,18 +465,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (nameInput) nameInput.value = storedName;
     if (emailInput) emailInput.value = storedEmail;
 
-    // Load and apply saved theme
+    updateAccountStats();
+
     const savedTheme = localStorage.getItem('theme') || 'light';
     applyTheme(savedTheme, false);
 
-    // Theme option click handlers
     const themeOptions = document.querySelectorAll('.theme-option');
     themeOptions.forEach(option => {
         option.addEventListener('click', () => {
             const theme = option.getAttribute('data-theme');
             applyTheme(theme, true);
-            
-            // Show feedback
             Swal.fire({
                 icon: 'success',
                 title: `${theme.charAt(0).toUpperCase() + theme.slice(1)} Mode Activated`,
@@ -373,14 +494,33 @@ document.addEventListener("DOMContentLoaded", () => {
             const newEmail = emailInput.value.trim();
 
             if (newName.length < 2) {
-                Swal.fire({ icon: "error", title: "Invalid Name", text: "Name must be at least 2 characters!" });
+                Swal.fire({ icon: "error", title: "Invalid Name", text: "Name must be at least 2 characters!", background: '#0a0e27', color: '#fff' });
                 return;
             }
             if (!newEmail.includes("@")) {
-                Swal.fire({ icon: "error", title: "Invalid Email", text: "Please enter a valid email!" });
+                Swal.fire({ icon: "error", title: "Invalid Email", text: "Please enter a valid email!", background: '#0a0e27', color: '#fff' });
                 return;
             }
 
+            // Update user in users array
+            const userEmail = getCurrentUserEmail();
+            const users = JSON.parse(localStorage.getItem('finflow_users')) || [];
+            const userIndex = users.findIndex(u => u.email === userEmail);
+            
+            if (userIndex !== -1) {
+                users[userIndex].name = newName;
+                users[userIndex].email = newEmail;
+                localStorage.setItem('finflow_users', JSON.stringify(users));
+            }
+            
+            // Update current user
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                currentUser.name = newName;
+                currentUser.email = newEmail;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+            
             localStorage.setItem("userName", newName);
             localStorage.setItem("userEmail", newEmail);
 
@@ -389,11 +529,11 @@ document.addEventListener("DOMContentLoaded", () => {
             userEmailElements.forEach(el => el.textContent = newEmail);
             userAvatars.forEach(el => el.textContent = newName.charAt(0).toUpperCase());
 
-            Swal.fire({ icon: "success", title: "Profile Updated!", timer: 1500, showConfirmButton: false });
+            Swal.fire({ icon: "success", title: "Profile Updated!", timer: 1500, showConfirmButton: false, background: '#0a0e27', color: '#fff' });
         });
     }
 
-    // Update Password
+    // Update Password Button
     const updatePasswordBtn = document.getElementById("updatePasswordBtn");
     if (updatePasswordBtn) {
         updatePasswordBtn.addEventListener("click", () => {
@@ -401,27 +541,49 @@ document.addEventListener("DOMContentLoaded", () => {
             const newPwd = document.getElementById("newPassword").value;
 
             if (!currentPwd || !newPwd) {
-                Swal.fire({ icon: "error", title: "Error", text: "Please fill both password fields!" });
+                Swal.fire({ icon: "error", title: "Error", text: "Please fill both password fields!", background: '#0a0e27', color: '#fff' });
                 return;
             }
             if (newPwd.length < 6) {
-                Swal.fire({ icon: "error", title: "Weak Password", text: "Password must be at least 6 characters!" });
+                Swal.fire({ icon: "error", title: "Weak Password", text: "Password must be at least 6 characters!", background: '#0a0e27', color: '#fff' });
                 return;
             }
-
-            Swal.fire({ icon: "success", title: "Password Updated!", timer: 1500, showConfirmButton: false });
-            document.getElementById("currentPassword").value = "";
-            document.getElementById("newPassword").value = "";
+            
+            // Verify current password
+            const storedPassword = loadUserPassword();
+            if (currentPwd !== storedPassword) {
+                Swal.fire({ icon: "error", title: "Wrong Password", text: "Current password is incorrect!", background: '#0a0e27', color: '#fff' });
+                return;
+            }
+            
+            // Update password
+            if (updateUserPassword(newPwd)) {
+                // Update the displayed password in the info section
+                const passwordDisplayInput = document.getElementById('passwordDisplay');
+                if (passwordDisplayInput) {
+                    passwordDisplayInput.dataset.actualPassword = newPwd;
+                    // If password is currently visible, update the displayed value
+                    if (passwordDisplayInput.type === 'text') {
+                        passwordDisplayInput.value = newPwd;
+                    }
+                }
+                
+                Swal.fire({ icon: "success", title: "Password Updated!", text: "Your password has been changed.", timer: 2000, showConfirmButton: false, background: '#0a0e27', color: '#fff' });
+                document.getElementById("currentPassword").value = "";
+                document.getElementById("newPassword").value = "";
+            } else {
+                Swal.fire({ icon: "error", title: "Error", text: "Failed to update password.", background: '#0a0e27', color: '#fff' });
+            }
         });
     }
 
-    // Export Data
     const exportBtn = document.getElementById("exportDataBtn");
     if (exportBtn) {
         exportBtn.addEventListener("click", () => {
             const data = {
                 userName: localStorage.getItem("userName"),
                 userEmail: localStorage.getItem("userEmail"),
+                memberSince: localStorage.getItem("memberSince"),
                 theme: localStorage.getItem("theme"),
                 expenses: JSON.parse(localStorage.getItem("expenses")) || [],
                 budgets: JSON.parse(localStorage.getItem("budgets")) || []
@@ -433,11 +595,10 @@ document.addEventListener("DOMContentLoaded", () => {
             a.download = "finflow_data_export.json";
             a.click();
             URL.revokeObjectURL(url);
-            Swal.fire({ icon: "success", title: "Exported!", text: "Your data has been downloaded.", timer: 1500, showConfirmButton: false });
+            Swal.fire({ icon: "success", title: "Exported!", text: "Your data has been downloaded.", timer: 1500, showConfirmButton: false, background: '#0a0e27', color: '#fff' });
         });
     }
 
-    // Delete Account
     const deleteBtn = document.getElementById("deleteAccountBtn");
     if (deleteBtn) {
         deleteBtn.addEventListener("click", () => {
@@ -449,6 +610,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 showCancelButton: true,
                 confirmButtonColor: "#dc2626",
                 confirmButtonText: "Delete Forever",
+                background: '#0a0e27',
+                color: '#fff',
                 inputValidator: (value) => {
                     if (!value || value !== "DELETE") {
                         return "You must type DELETE in all caps to confirm.";
@@ -457,14 +620,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     localStorage.clear();
-                    Swal.fire({ icon: "success", title: "Account Deleted", text: "Redirecting to login...", timer: 1500, showConfirmButton: false });
+                    Swal.fire({ icon: "success", title: "Account Deleted", text: "Redirecting to login...", timer: 1500, showConfirmButton: false, background: '#0a0e27', color: '#fff' });
                     setTimeout(() => { window.location.href = "login.html"; }, 1500);
                 }
             });
         });
     }
 
-    // Logout
     const logoutBtn = document.getElementById("logoutBtn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", (e) => {
@@ -476,18 +638,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 showCancelButton: true,
                 confirmButtonColor: '#ef4444',
                 cancelButtonColor: '#6b7280',
-                confirmButtonText: 'Yes, logout'
+                confirmButtonText: 'Yes, logout',
+                background: '#0a0e27',
+                color: '#fff'
             }).then((result) => {
                 if (result.isConfirmed) {
                     localStorage.removeItem('isLoggedIn');
-                    Swal.fire({ icon: 'success', title: 'Logged Out!', text: 'Redirecting...', timer: 1500, showConfirmButton: false });
+                    localStorage.removeItem('currentUser');
+                    Swal.fire({ icon: 'success', title: 'Logged Out!', text: 'Redirecting...', timer: 1500, showConfirmButton: false, background: '#0a0e27', color: '#fff' });
                     setTimeout(() => { window.location.href = "login.html"; }, 1500);
                 }
             });
         });
     }
 
-    // Save AI Toggle preference
     const aiToggle = document.getElementById("aiToggle");
     if (aiToggle) {
         const savedAiPref = localStorage.getItem("aiEnabled");
@@ -495,11 +659,11 @@ document.addEventListener("DOMContentLoaded", () => {
         
         aiToggle.addEventListener("change", () => {
             localStorage.setItem("aiEnabled", aiToggle.checked);
-            Swal.fire({ icon: "success", title: aiToggle.checked ? "AI Insights Enabled" : "AI Insights Disabled", timer: 1000, showConfirmButton: false });
+            updateAccountStats();
+            Swal.fire({ icon: "success", title: aiToggle.checked ? "AI Insights Enabled" : "AI Insights Disabled", timer: 1000, showConfirmButton: false, background: '#0a0e27', color: '#fff' });
         });
     }
 
-    // Save notification preferences
     const emailNotif = document.getElementById("emailNotif");
     const pushNotif = document.getElementById("pushNotif");
     const budgetAlerts = document.getElementById("budgetAlerts");
@@ -514,37 +678,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (budgetAlerts) budgetAlerts.addEventListener("change", () => saveNotifPref("budgetAlerts", budgetAlerts.checked));
     if (spendingAlerts) spendingAlerts.addEventListener("change", () => saveNotifPref("spendingAlerts", spendingAlerts.checked));
 
-    // Load saved notification preferences
     if (emailNotif && localStorage.getItem("emailNotif") !== null) emailNotif.checked = localStorage.getItem("emailNotif") === "true";
     if (pushNotif && localStorage.getItem("pushNotif") !== null) pushNotif.checked = localStorage.getItem("pushNotif") === "true";
     if (budgetAlerts && localStorage.getItem("budgetAlerts") !== null) budgetAlerts.checked = localStorage.getItem("budgetAlerts") === "true";
     if (spendingAlerts && localStorage.getItem("spendingAlerts") !== null) spendingAlerts.checked = localStorage.getItem("spendingAlerts") === "true";
-
-    // Notification bell click handler
-    const notificationBell = document.querySelector(".notification");
-    if (notificationBell) {
-        notificationBell.addEventListener("click", () => {
-            Swal.fire({
-                title: "Notifications",
-                html: `
-                    <div style="text-align:left; font-size: 14px;">
-                        <div style="margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid #eee;">
-                            <strong>🔔 Budget Alert:</strong> Food & Dining is at 84%
-                        </div>
-                        <div style="margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid #eee;">
-                            <strong>📊 Monthly Report:</strong> Your spending decreased by 8%
-                        </div>
-                        <div>
-                            <strong>🏆 Achievement:</strong> You've saved $500 this month!
-                        </div>
-                    </div>
-                `,
-                confirmButtonText: "Got it",
-                background: document.body.classList.contains('dark-theme') ? '#1f2937' : '#fff',
-                color: document.body.classList.contains('dark-theme') ? '#fff' : '#1f2937'
-            });
-        });
-    }
 });
 
-console.log('Profile page loaded with Three.js, Glass Morphism, and fully working Light/Dark/Auto themes!');
+console.log('Profile page loaded with password toggles for all fields!');

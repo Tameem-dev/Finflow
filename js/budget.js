@@ -1,3 +1,41 @@
+// ========== USER DATA MANAGEMENT ==========
+function getCurrentUserEmail() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser ? currentUser.email : null;
+}
+
+function saveUserBudgets(budgetsData) {
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) return;
+    
+    const allBudgets = JSON.parse(localStorage.getItem('finflow_all_budgets')) || {};
+    allBudgets[userEmail] = budgetsData;
+    localStorage.setItem('finflow_all_budgets', JSON.stringify(allBudgets));
+    localStorage.setItem('budgets', JSON.stringify(budgetsData));
+}
+
+function loadUserBudgets() {
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) {
+        return {
+            categories: [
+                { id: 1, name: 'Food & Dining', icon: 'fork-knife', color: 'blue', budget: 500.00 },
+                { id: 2, name: 'Transportation', icon: 'car', color: 'green', budget: 300.00 },
+                { id: 3, name: 'Utilities', icon: 'lightning', color: 'orange', budget: 350.00 }
+            ]
+        };
+    }
+    
+    const allBudgets = JSON.parse(localStorage.getItem('finflow_all_budgets')) || {};
+    return allBudgets[userEmail] || {
+        categories: [
+            { id: 1, name: 'Food & Dining', icon: 'fork-knife', color: 'blue', budget: 500.00 },
+            { id: 2, name: 'Transportation', icon: 'car', color: 'green', budget: 300.00 },
+            { id: 3, name: 'Utilities', icon: 'lightning', color: 'orange', budget: 350.00 }
+        ]
+    };
+}
+
 // ========== THREE.JS ANIMATED BACKGROUND ==========
 const canvas = document.createElement('canvas');
 canvas.id = 'bg-canvas';
@@ -120,7 +158,6 @@ if (mobileToggle) {
     });
 }
 
-// Close sidebar when clicking outside on mobile
 document.addEventListener('click', (e) => {
     if (window.innerWidth <= 1024) {
         if (sidebar && !sidebar.contains(e.target) && mobileToggle && !mobileToggle.contains(e.target)) {
@@ -129,25 +166,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// ========== BUDGET MANAGEMENT LOGIC ==========
-// Data
-let budgets = JSON.parse(localStorage.getItem('budgets')) || {
-    categories: [
-        { id: 1, name: 'Food & Dining', icon: 'fork-knife', color: 'blue', budget: 500.00 },
-        { id: 2, name: 'Transportation', icon: 'car', color: 'green', budget: 300.00 },
-        { id: 3, name: 'Utilities', icon: 'lightning', color: 'orange', budget: 350.00 }
-    ]
-};
-
-// Elements
-const budgetGrid = document.getElementById('budgetGrid');
-const budgetModal = document.getElementById('budgetModal');
-const openModalBtn = document.getElementById('openModalBtn');
-const closeModalBtn = document.getElementById('closeModalBtn');
-const budgetForm = document.getElementById('budgetForm');
-const searchInput = document.getElementById('searchInput');
-
-// Set user name from localStorage
+// ========== HEADER FUNCTIONALITY ==========
 const userDisplay = document.getElementById("userDisplayName");
 const userAvatar = document.getElementById("userAvatarIcon");
 const savedName = localStorage.getItem("userName") || "User";
@@ -155,20 +174,96 @@ const savedName = localStorage.getItem("userName") || "User";
 if (userDisplay) userDisplay.textContent = savedName;
 if (userAvatar) userAvatar.textContent = savedName[0].toUpperCase();
 
-// Check if user is logged in
+const headerUserName = document.getElementById('headerUserName');
+const headerAvatar = document.getElementById('headerAvatar');
+if (headerUserName) headerUserName.textContent = savedName;
+if (headerAvatar) headerAvatar.textContent = savedName[0].toUpperCase();
+
+// Date Range Selector
+const dateRangeBtn = document.getElementById('dateRangeBtn');
+const selectedRangeSpan = document.getElementById('selectedRange');
+
+if (dateRangeBtn) {
+    dateRangeBtn.addEventListener('click', () => {
+        Swal.fire({
+            title: 'Select Date Range',
+            html: `
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="swal2-btn" data-range="Today" style="padding: 10px; border: none; background: #1e40af; color: white; border-radius: 8px; cursor: pointer;">Today</button>
+                    <button class="swal2-btn" data-range="This Week" style="padding: 10px; border: none; background: #1e40af; color: white; border-radius: 8px; cursor: pointer;">This Week</button>
+                    <button class="swal2-btn" data-range="This Month" style="padding: 10px; border: none; background: #1e40af; color: white; border-radius: 8px; cursor: pointer;">This Month</button>
+                    <button class="swal2-btn" data-range="This Year" style="padding: 10px; border: none; background: #1e40af; color: white; border-radius: 8px; cursor: pointer;">This Year</button>
+                </div>
+            `,
+            showConfirmButton: false,
+            background: '#0f172a',
+            color: '#fff',
+            didOpen: () => {
+                document.querySelectorAll('.swal2-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const range = btn.dataset.range;
+                        if (selectedRangeSpan) selectedRangeSpan.textContent = range;
+                        Swal.close();
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${range} Selected`,
+                            timer: 1000,
+                            showConfirmButton: false,
+                            background: '#0f172a',
+                            color: '#fff',
+                            iconColor: '#3b82f6'
+                        });
+                    });
+                });
+            }
+        });
+    });
+}
+
+// User menu click - go to profile
+const userMenuBtn = document.getElementById('userMenuBtn');
+if (userMenuBtn) {
+    userMenuBtn.addEventListener('click', () => {
+        window.location.href = 'profile.html';
+    });
+}
+
+// Search keyboard shortcut
+const searchInputField = document.getElementById('searchInput');
+if (searchInputField) {
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            searchInputField.focus();
+        }
+    });
+}
+
+// ========== BUDGET MANAGEMENT LOGIC ==========
+let budgets = loadUserBudgets();
+saveUserBudgets(budgets);
+
+const budgetGrid = document.getElementById('budgetGrid');
+const budgetModal = document.getElementById('budgetModal');
+const openModalBtn = document.getElementById('openModalBtn');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const budgetForm = document.getElementById('budgetForm');
+const searchInput = document.getElementById('searchInput');
+
 const isLoggedIn = localStorage.getItem('isLoggedIn');
 if (!isLoggedIn) {
     Swal.fire({
         icon: 'warning',
         title: 'Not Logged In',
         text: 'Please login to access your budgets',
-        confirmButtonColor: '#4f46e5'
+        confirmButtonColor: '#1e40af',
+        background: '#0f172a',
+        color: '#fff'
     }).then(() => {
         window.location.href = 'login.html';
     });
 }
 
-// Logout functionality
 const logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
     logoutBtn.addEventListener('click', (e) => {
@@ -178,20 +273,25 @@ if (logoutBtn) {
             text: 'Are you sure you want to logout?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#ef4444',
-            cancelButtonColor: '#6b7280',
-            confirmButtonText: 'Yes, logout'
+            confirmButtonColor: '#1e40af',
+            cancelButtonColor: '#475569',
+            confirmButtonText: 'Yes, logout',
+            background: '#0f172a',
+            color: '#fff'
         }).then((result) => {
             if (result.isConfirmed) {
                 localStorage.removeItem('isLoggedIn');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('userName');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('expenses');
+                localStorage.removeItem('budgets');
                 Swal.fire({
                     icon: 'success',
                     title: 'Logged Out!',
                     text: 'Redirecting to login page...',
                     timer: 1500,
-                    showConfirmButton: false
+                    showConfirmButton: false,
+                    background: '#0f172a',
+                    color: '#fff'
                 }).then(() => {
                     window.location.href = 'login.html';
                 });
@@ -200,36 +300,52 @@ if (logoutBtn) {
     });
 }
 
-// Get spending for a category
 function getSpending(catName) {
-    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) return 0;
+    
+    const allExpenses = JSON.parse(localStorage.getItem('finflow_all_expenses')) || {};
+    const expenses = allExpenses[userEmail] || [];
     return expenses
         .filter(e => e.category && e.category.toLowerCase().trim() === catName.toLowerCase().trim())
         .reduce((sum, e) => sum + parseFloat(e.amount || 0), 0);
 }
 
-// Delete category function (global for onclick)
 window.deleteCategory = function(id) {
     Swal.fire({
         title: 'Delete category?',
         text: "This will remove this budget limit.",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#4f46e5',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: '#1e40af',
+        cancelButtonColor: '#475569',
+        confirmButtonText: 'Yes, delete it!',
+        background: '#0f172a',
+        color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
             budgets.categories = budgets.categories.filter(c => c.id !== id);
             updateUI();
-            Swal.fire('Deleted!', 'Budget category has been removed.', 'success');
+            saveUserBudgets(budgets);
+            Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Budget category has been removed.',
+                timer: 1500,
+                showConfirmButton: false,
+                background: '#0f172a',
+                color: '#fff'
+            });
         }
     });
 };
 
-// Update UI
 function updateUI() {
-    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) return;
+    
+    const allExpenses = JSON.parse(localStorage.getItem('finflow_all_expenses')) || {};
+    const expenses = allExpenses[userEmail] || [];
     const totalSpent = expenses.reduce((sum, e) => sum + parseFloat(e.amount || 0), 0);
     const totalBudget = budgets.categories.reduce((sum, c) => sum + c.budget, 0);
     
@@ -249,10 +365,9 @@ function updateUI() {
     if(progressText) progressText.textContent = `${percent.toFixed(1)}%`;
 
     renderGrid();
-    localStorage.setItem('budgets', JSON.stringify(budgets));
+    saveUserBudgets(budgets);
 }
 
-// Render budget grid
 function renderGrid(searchTerm = '') {
     if (!budgetGrid) return;
     
@@ -302,21 +417,18 @@ function renderGrid(searchTerm = '') {
     }).join('');
 }
 
-// Search functionality
 if (searchInput) {
     searchInput.addEventListener('input', (e) => {
         renderGrid(e.target.value);
     });
 }
 
-// Escape HTML to prevent XSS
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Modal functionality
 if (openModalBtn) {
     openModalBtn.onclick = () => {
         if (budgetModal) budgetModal.classList.add('show');
@@ -329,7 +441,6 @@ if (closeModalBtn) {
     };
 }
 
-// Close modal when clicking outside
 if (budgetModal) {
     budgetModal.addEventListener('click', (e) => {
         if (e.target === budgetModal) {
@@ -338,7 +449,6 @@ if (budgetModal) {
     });
 }
 
-// Form submission
 if (budgetForm) {
     budgetForm.onsubmit = (e) => {
         e.preventDefault();
@@ -347,7 +457,14 @@ if (budgetForm) {
         const catColor = document.getElementById('catColor');
         
         if (!catName.value || !catAmount.value) {
-            Swal.fire({ icon: 'error', title: 'Error', text: 'Please fill all fields!' });
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please fill all fields!',
+                confirmButtonColor: '#1e40af',
+                background: '#0f172a',
+                color: '#fff'
+            });
             return;
         }
         
@@ -359,15 +476,23 @@ if (budgetForm) {
             icon: 'tag'
         });
         updateUI();
+        saveUserBudgets(budgets);
         if (budgetModal) budgetModal.classList.remove('show');
         budgetForm.reset();
-        Swal.fire({ icon: 'success', title: 'Added!', text: 'Budget category added successfully!', timer: 1500, showConfirmButton: false });
+        Swal.fire({
+            icon: 'success',
+            title: 'Added!',
+            text: 'Budget category added successfully!',
+            timer: 1500,
+            showConfirmButton: false,
+            background: '#0f172a',
+            color: '#fff'
+        });
     };
 }
 
-// Initial render
 document.addEventListener('DOMContentLoaded', () => {
     updateUI();
 });
 
-console.log('Budget page loaded with Three.js, Glass Morphism, and Mobile Responsiveness!');
+console.log('Budget page loaded with user-specific data!');

@@ -6,9 +6,10 @@
     <title>Dashboard - FinFlow</title>
     <link rel="shortcut icon" href="finflow logo (1).png" />
     <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/theme.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="css/theme.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
   </head>
   <body>
     <!-- Three.js Canvas Background -->
@@ -30,62 +31,33 @@
 
       <nav class="nav-menu">
         <a href="dashboard.html" class="nav-item active">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
-            <rect x="11" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
-            <rect x="3" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
-            <rect x="11" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+          <i class="ph ph-squares-four"></i>
           <span>Dashboard</span>
         </a>
-
         <a href="expenses.html" class="nav-item">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M3 8H17" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M7 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+          <i class="ph ph-receipt"></i>
           <span>Expenses</span>
         </a>
-
         <a href="budget.html" class="nav-item">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+          <i class="ph ph-wallet"></i>
           <span>Budgets</span>
         </a>
-
         <a href="analytics.html" class="nav-item">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 16L7 12L10 15L17 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M17 12V8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <i class="ph ph-chart-line-up"></i>
           <span>Analytics</span>
         </a>
-
-        <a href="#" class="nav-item">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
+        <a href="ai-insights.html" class="nav-item">
+          <i class="ph ph-sparkle"></i>
           <span>AI Insights</span>
         </a>
-
         <a href="profile.html" class="nav-item">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+          <i class="ph ph-user"></i>
           <span>Profile</span>
         </a>
       </nav>
 
       <a href="#" class="nav-item logout" id="logoutBtn">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13 14L17 10L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M17 10H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+        <i class="ph ph-sign-out"></i>
         <span>Logout</span>
       </a>
     </aside>
@@ -95,28 +67,36 @@
       <!-- Header -->
       <header class="header">
         <div class="search-bar">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="9" cy="9" r="6" stroke="#9ca3af" stroke-width="1.5" />
-            <path d="M13.5 13.5L17 17" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
-          </svg>
-          <input type="text" placeholder="Search transactions, budgets..." />
+          <i class="ph ph-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search transactions, budgets..." />
+          <span class="search-shortcut">⌘K</span>
         </div>
 
         <div class="header-right">
-          <div class="notification">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 3C7.23858 3 5 5.23858 5 8V11L3 14H17L15 11V8C15 5.23858 12.7614 3 10 3Z" stroke="#4b5563" stroke-width="1.5"/>
-              <path d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14" stroke="#4b5563" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-            <span class="notification-badge"></span>
+          <div class="date-range" id="dateRangeBtn">
+            <i class="ph ph-calendar"></i>
+            <span id="selectedRange">This Month</span>
+            <i class="ph ph-caret-down"></i>
           </div>
+<div class="notification" id="notificationBtn" style="position:relative;cursor:pointer;">
+    <i class="ph ph-bell" style="font-size:20px;color:white;"></i>
+    <span class="notification-badge" id="notificationCount" style="position:absolute;top:-5px;right:-8px;background:#ef4444;color:white;font-size:10px;border-radius:50%;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;"></span>
+</div>
+<div class="notification-dropdown" id="notificationDropdown">
+    <div class="notification-header">
+        <h3>Notifications</h3>
+        <button class="mark-all-read" id="markAllReadBtn">Mark all read</button>
+    </div>
+    <div class="notifications-list" id="notificationsList"></div>
+</div>
 
-          <div class="user-info">
+          <div class="user-info" id="userMenuBtn">
+            <div class="user-avatar" id="userAvatar"></div>
             <div class="user-text">
               <span class="welcome-text">Welcome back,</span>
-              <span class="user-name"></span>
+              <span class="user-name" id="userName"></span>
             </div>
-            <div class="user-avatar"></div>
+            <i class="ph ph-caret-down"></i>
           </div>
         </div>
       </header>
@@ -125,142 +105,155 @@
       <div class="dashboard-content">
         <div class="page-header">
           <h1>Dashboard</h1>
-          <p>Welcome back! Here's your financial overview.</p>
+          <p>Here's your financial overview.</p>
         </div>
 
-        <!-- Stats Cards & AI Insight -->
-        <div class="dashboard-container">
-          <div class="row-top">
-            <div class="card summary-card">
-              <div class="card-header">
-                <span>Total Income</span>
-              </div>
-              <div class="amount">$8,420</div>
-              <div class="trend positive">
-                <span>↑ +12.5%</span>
-                <span class="trend-text">vs last month</span>
-              </div>
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon income-icon">
+              <i class="ph ph-trend-up"></i>
             </div>
-
-            <div class="card summary-card">
-              <div class="card-header">
-                <span>Total Expenses</span>
-              </div>
-              <div class="amount">$5,280</div>
-              <div class="trend negative">
-                <span>↓ +8.2%</span>
-                <span class="trend-text">vs last month</span>
-              </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Income</span>
+              <h3 class="stat-value" id="totalIncome">$8,420</h3>
+              <span class="stat-change positive">↑ 12.5% vs last month</span>
             </div>
+          </div>
 
-            <div class="card summary-card">
-              <div class="card-header">
-                <span>Balance</span>
-              </div>
-              <div class="amount">$3,140</div>
-              <div class="trend positive">
-                <span>↑ +18.3%</span>
-                <span class="trend-text">vs last month</span>
-              </div>
+          <div class="stat-card">
+            <div class="stat-icon expense-icon">
+              <i class="ph ph-trend-down"></i>
             </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Expenses</span>
+              <h3 class="stat-value" id="totalExpenses">$5,280</h3>
+              <span class="stat-change negative">↑ 8.2% vs last month</span>
+            </div>
+          </div>
 
-            <div class="card ai-card">
-              <div class="ai-header">
-                <span>✨ AI Insight</span>
+          <div class="stat-card">
+            <div class="stat-icon balance-icon">
+              <i class="ph ph-wallet"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Balance</span>
+              <h3 class="stat-value" id="totalBalance">$3,140</h3>
+              <span class="stat-change positive">↑ 18.3% vs last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon savings-icon">
+              <i class="ph ph-piggy-bank"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Savings Rate</span>
+              <h3 class="stat-value">37.3%</h3>
+              <span class="stat-change positive">↑ 5.8% vs last month</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Insight Banner -->
+        <div class="ai-insight-banner">
+          <div class="ai-icon">
+            <i class="ph-fill ph-brain"></i>
+          </div>
+          <div class="ai-content">
+            <h4>✨ AI Insight</h4>
+            <p>Your spending on dining out increased by 35% this month. Consider setting a budget limit to save an extra <strong>$240</strong> next month.</p>
+          </div>
+          <div class="ai-actions">
+            <button class="btn-outline" id="setBudgetBtn">Set Budget</button>
+            <button class="btn-primary" id="viewDetailsBtn">View Details</button>
+          </div>
+        </div>
+
+        <!-- Transactions and Budgets Row -->
+        <div class="content-row">
+          <div class="card transactions-card">
+            <div class="card-header">
+              <h3>Recent Transactions</h3>
+              <a href="expenses.html" class="view-all">View All <i class="ph ph-arrow-right"></i></a>
+            </div>
+            <div class="transaction-list" id="transactionList">
+              <div class="transaction-item">
+                <div class="transaction-icon grocery"><i class="ph ph-shopping-cart"></i></div>
+                <div class="transaction-details">
+                  <span class="transaction-title">Grocery Store</span>
+                  <span class="transaction-meta">Today • Food & Dining</span>
+                </div>
+                <div class="transaction-amount negative">-$85.50</div>
               </div>
-              <p class="ai-text">
-                Your spending on dining out increased by 35% this month.
-                Consider setting a budget limit to save an extra
-                <strong>$240</strong> next month.
-              </p>
-              <div class="ai-buttons">
-                <button class="btn-white">Set Budget</button>
-                <button class="btn-blue">View Details</button>
+              <div class="transaction-item">
+                <div class="transaction-icon income"><i class="ph ph-briefcase"></i></div>
+                <div class="transaction-details">
+                  <span class="transaction-title">Salary Deposit</span>
+                  <span class="transaction-meta">Yesterday • Income</span>
+                </div>
+                <div class="transaction-amount positive">+$3,200.00</div>
+              </div>
+              <div class="transaction-item">
+                <div class="transaction-icon utilities"><i class="ph ph-lightning"></i></div>
+                <div class="transaction-details">
+                  <span class="transaction-title">Electric Bill</span>
+                  <span class="transaction-meta">Dec 24 • Utilities</span>
+                </div>
+                <div class="transaction-amount negative">-$120.00</div>
+              </div>
+              <div class="transaction-item">
+                <div class="transaction-icon dining"><i class="ph ph-fork-knife"></i></div>
+                <div class="transaction-details">
+                  <span class="transaction-title">Restaurant</span>
+                  <span class="transaction-meta">Dec 23 • Dining</span>
+                </div>
+                <div class="transaction-amount negative">-$45.00</div>
               </div>
             </div>
           </div>
 
-          <div class="row-bottom">
-            <div class="card large-card">
-              <h3>Recent Transactions</h3>
-
-              <div class="transaction-list">
-                <div class="transaction-item">
-                  <div class="t-details">
-                    <div class="t-title">Grocery Store</div>
-                    <div class="t-meta">Today • Food</div>
-                  </div>
-                  <div class="t-amount">-$85.50</div>
+          <div class="card budget-card">
+            <div class="card-header">
+              <h3>Budget Overview</h3>
+              <a href="budget.html" class="view-all">Manage <i class="ph ph-arrow-right"></i></a>
+            </div>
+            <div class="budget-list" id="budgetList">
+              <div class="budget-item">
+                <div class="budget-header">
+                  <span>Food & Dining</span>
+                  <span class="budget-values">$420 / $500</span>
                 </div>
-
-                <div class="transaction-item">
-                  <div class="t-details">
-                    <div class="t-title">Salary Deposit</div>
-                    <div class="t-meta">Dec 25 • Income</div>
-                  </div>
-                  <div class="t-amount positive">+$3,200</div>
-                </div>
-
-                <div class="transaction-item">
-                  <div class="t-details">
-                    <div class="t-title">Electric Bill</div>
-                    <div class="t-meta">Dec 24 • Utilities</div>
-                  </div>
-                  <div class="t-amount">-$120.00</div>
-                </div>
-
-                <div class="transaction-item">
-                  <div class="t-details">
-                    <div class="t-title">Restaurant</div>
-                    <div class="t-meta">Dec 23 • Dining</div>
-                  </div>
-                  <div class="t-amount">-$45.00</div>
+                <div class="progress-bar">
+                  <div class="progress-fill blue" style="width: 84%"></div>
                 </div>
               </div>
-            </div>
-
-            <div class="card large-card">
-              <h3>Budget Overview</h3>
-
-              <div class="budget-list">
-                <div class="budget-item">
-                  <div class="b-header">
-                    <span>Food & Dining</span>
-                    <span class="b-values">$420 / $500</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="fill blue" style="width: 84%"></div>
-                  </div>
+              <div class="budget-item">
+                <div class="budget-header">
+                  <span>Transportation</span>
+                  <span class="budget-values">$180 / $300</span>
                 </div>
-
-                <div class="budget-item">
-                  <div class="b-header">
-                    <span>Transportation</span>
-                    <span class="b-values">$180 / $300</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="fill green" style="width: 60%"></div>
-                  </div>
+                <div class="progress-bar">
+                  <div class="progress-fill green" style="width: 60%"></div>
                 </div>
-
-                <div class="budget-item">
-                  <div class="b-header">
-                    <span>Entertainment</span>
-                    <span class="b-values">$250 / $200</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="fill red" style="width: 100%"></div>
-                  </div>
+              </div>
+              <div class="budget-item">
+                <div class="budget-header">
+                  <span>Entertainment</span>
+                  <span class="budget-values">$250 / $200</span>
                 </div>
-
-                <div class="budget-item">
-                  <div class="b-header">
-                    <span>Shopping</span>
-                    <span class="b-values">$340 / $400</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div class="fill purple" style="width: 85%"></div>
-                  </div>
+                <div class="progress-bar">
+                  <div class="progress-fill red" style="width: 100%"></div>
+                </div>
+                <span class="over-budget">⚠️ Over budget by $50</span>
+              </div>
+              <div class="budget-item">
+                <div class="budget-header">
+                  <span>Shopping</span>
+                  <span class="budget-values">$340 / $400</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill purple" style="width: 85%"></div>
                 </div>
               </div>
             </div>
@@ -269,7 +262,8 @@
       </div>
     </main>
 
-    <script src="js/dashboard.js"></script><!-- Theme JS (shared) - Add BEFORE other page-specific JS -->
-<script src="js/theme.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/notifications.js"></script>
   </body>
 </html>

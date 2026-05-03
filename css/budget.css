@@ -1,3 +1,5 @@
+/* ========== COMPLETE budget.css ========== */
+
 * {
     margin: 0;
     padding: 0;
@@ -111,6 +113,10 @@ body {
     transition: all 0.3s;
 }
 
+.nav-item i {
+    font-size: 20px;
+}
+
 .nav-item:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
@@ -145,8 +151,8 @@ body {
 .header {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(12px);
-    padding: 16px 24px;
-    border-radius: 16px;
+    padding: 12px 20px;
+    border-radius: 20px;
     margin-bottom: 24px;
     display: flex;
     justify-content: space-between;
@@ -154,6 +160,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
     flex-wrap: wrap;
     gap: 15px;
+    position: relative;
+    z-index: 100;  /* Add this */
 }
 
 .search-bar {
@@ -162,9 +170,9 @@ body {
     gap: 12px;
     background: rgba(255, 255, 255, 0.1);
     padding: 10px 16px;
-    border-radius: 10px;
+    border-radius: 40px;
     flex: 1;
-    max-width: 400px;
+    max-width: 350px;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -177,7 +185,7 @@ body {
     border: none;
     background: transparent;
     outline: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     width: 100%;
     color: white;
 }
@@ -186,38 +194,101 @@ body {
     color: rgba(255, 255, 255, 0.5);
 }
 
+.search-shortcut {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
 .header-right {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
+}
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 40px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+    color: white;
+    font-size: 0.85rem;
+}
+
+.date-range:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.date-range i {
+    font-size: 16px;
+}
+
+.notification {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 40px;
+    transition: all 0.3s;
+}
+
+.notification:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.notification i {
+    font-size: 20px;
+    color: white;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
 }
 
 .user-info {
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 6px 12px 6px 8px;
+    border-radius: 40px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
 }
 
-.user-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+.user-info:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
-.welcome-text {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.user-name {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: white;
+.user-info i:last-child {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .user-avatar {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: linear-gradient(135deg, #60a5fa, #2563EB);
     display: flex;
@@ -225,13 +296,38 @@ body {
     justify-content: center;
     color: white;
     font-weight: 600;
-    font-size: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 0.9rem;
+}
+
+.user-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.welcome-text {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
 }
 
 /* Budget Content */
 .budget-content {
     padding: 0;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .page-header h1 {
@@ -337,7 +433,7 @@ body {
 /* Budget Grid */
 .budget-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
 }
 
@@ -578,8 +674,7 @@ body {
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
 }
 
-/* ========== RESPONSIVE DESIGN ========== */
-/* Tablet (768px - 1024px) */
+/* Responsive Design */
 @media (max-width: 1024px) {
     .sidebar {
         transform: translateX(-100%);
@@ -605,7 +700,6 @@ body {
     }
 }
 
-/* Mobile (481px - 768px) */
 @media (max-width: 768px) {
     .main-content {
         padding: 65px 12px 12px 12px;
@@ -618,6 +712,11 @@ body {
     
     .search-bar {
         max-width: 100%;
+        width: 100%;
+    }
+    
+    .header-right {
+        justify-content: space-between;
     }
     
     .page-header {
@@ -651,12 +750,19 @@ body {
         font-size: 1.5rem;
     }
     
+    .date-range span {
+        display: none;
+    }
+    
     .user-text {
+        display: none;
+    }
+    
+    .search-shortcut {
         display: none;
     }
 }
 
-/* Small Mobile (up to 480px) */
 @media (max-width: 480px) {
     .main-content {
         padding: 60px 10px 10px 10px;
@@ -675,11 +781,7 @@ body {
         margin: 20px;
     }
     
-    .modal-header {
-        padding: 16px 20px;
-    }
-    
-    #budgetForm {
-        padding: 20px;
+    .date-range {
+        display: none;
     }
 }

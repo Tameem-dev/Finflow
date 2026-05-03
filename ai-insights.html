@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AI Insights - FinFlow</title>
+    <link rel="shortcut icon" href="finflow logo (1).png" />
+    <link rel="stylesheet" href="css/ai-insights.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Three.js Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Mobile Menu Toggle Button -->
+    <div class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <img src="finflow logo (1).png" alt="" />
+            <span>FinFlow</span>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">
+                <i class="ph ph-squares-four"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="expenses.html" class="nav-item">
+                <i class="ph ph-receipt"></i>
+                <span>Expenses</span>
+            </a>
+            <a href="budget.html" class="nav-item">
+                <i class="ph ph-wallet"></i>
+                <span>Budgets</span>
+            </a>
+            <a href="analytics.html" class="nav-item">
+                <i class="ph ph-chart-line-up"></i>
+                <span>Analytics</span>
+            </a>
+            <a href="ai-insights.html" class="nav-item active">
+                <i class="ph ph-sparkle"></i>
+                <span>AI Insights</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="ph ph-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+
+        <a href="#" id="logoutBtn" class="nav-item logout">
+            <i class="ph ph-sign-out"></i>
+            <span>Logout</span>
+        </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="search-bar">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Ask AI anything about your finances..." />
+                <span class="search-shortcut">⌘K</span>
+            </div>
+
+            <div class="header-right">
+                <div class="date-range" id="dateRangeBtn">
+                    <i class="ph ph-calendar"></i>
+                    <span id="selectedRange">This Month</span>
+                    <i class="ph ph-caret-down"></i>
+                </div>
+
+                <div class="notification" id="notificationBtn" style="position:relative;cursor:pointer;">
+                    <i class="ph ph-bell" style="font-size:20px;color:white;"></i>
+                    <span class="notification-badge" id="notificationCount" style="position:absolute;top:-5px;right:-8px;background:#ef4444;color:white;font-size:10px;border-radius:50%;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;"></span>
+                </div>
+                <div class="notification-dropdown" id="notificationDropdown">
+                    <div class="notification-header">
+                        <h3>Notifications</h3>
+                        <button class="mark-all-read" id="markAllReadBtn">Mark all read</button>
+                    </div>
+                    <div class="notifications-list" id="notificationsList"></div>
+                </div>
+
+                <div class="user-info" id="userMenuBtn">
+                    <div class="user-avatar" id="headerAvatar">U</div>
+                    <div class="user-text">
+                        <span class="welcome-text">Welcome back,</span>
+                        <span class="user-name" id="headerUserName">User</span>
+                    </div>
+                    <i class="ph ph-caret-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- AI Insights Content -->
+        <div class="ai-insights-container">
+            <!-- AI Header -->
+            <div class="ai-header-section">
+                <div class="ai-title">
+                    <div class="ai-badge">
+                        <i class="ph-fill ph-brain"></i>
+                        <span>AI-Powered</span>
+                    </div>
+                    <h1>AI Financial Insights</h1>
+                    <p>Get personalized financial recommendations based on your spending patterns</p>
+                </div>
+                <button class="refresh-insights" id="refreshInsights">
+                    <i class="ph ph-arrow-clockwise"></i>
+                    Refresh Insights
+                </button>
+            </div>
+
+            <!-- AI Summary Card -->
+            <div class="ai-summary-card">
+                <div class="ai-summary-icon">
+                    <i class="ph-fill ph-brain"></i>
+                </div>
+                <div class="ai-summary-content">
+                    <h3>AI Financial Summary</h3>
+                    <p id="aiSummaryMessage">Analyzing your financial data...</p>
+                </div>
+                <div class="ai-summary-score">
+                    <span class="score-label">AI Confidence Score</span>
+                    <span class="score-value" id="aiConfidenceScore">92%</span>
+                </div>
+            </div>
+
+            <!-- Insights Grid -->
+            <div class="insights-grid">
+                <!-- Spending Analysis Card -->
+                <div class="insight-card">
+                    <div class="insight-card-header">
+                        <i class="ph ph-chart-line-up"></i>
+                        <h3>Spending Analysis</h3>
+                    </div>
+                    <div class="insight-card-content" id="spendingAnalysis">
+                        Loading...
+                    </div>
+                </div>
+
+                <!-- Budget Recommendations Card -->
+                <div class="insight-card">
+                    <div class="insight-card-header">
+                        <i class="ph ph-wallet"></i>
+                        <h3>Budget Recommendations</h3>
+                    </div>
+                    <div class="insight-card-content" id="budgetRecommendations">
+                        Loading...
+                    </div>
+                </div>
+
+                <!-- Savings Opportunities Card -->
+                <div class="insight-card">
+                    <div class="insight-card-header">
+                        <i class="ph ph-piggy-bank"></i>
+                        <h3>Savings Opportunities</h3>
+                    </div>
+                    <div class="insight-card-content" id="savingsOpportunities">
+                        Loading...
+                    </div>
+                </div>
+
+                <!-- Trend Alerts Card -->
+                <div class="insight-card">
+                    <div class="insight-card-header">
+                        <i class="ph ph-trend-up"></i>
+                        <h3>Trend Alerts</h3>
+                    </div>
+                    <div class="insight-card-content" id="trendAlerts">
+                        Loading...
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Chat Section -->
+            <div class="ai-chat-section">
+                <div class="chat-header">
+                    <i class="ph-fill ph-robot"></i>
+                    <h3>Ask AI Assistant</h3>
+                    <span class="chat-badge">Powered by AI</span>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message ai-message">
+                        <div class="message-avatar"><i class="ph-fill ph-brain"></i></div>
+                        <div class="message-content">
+                            <p>Hello! I'm your AI financial assistant. Ask me anything about your finances, like:</p>
+                            <ul>
+                                <li>"Where can I save money?"</li>
+                                <li>"How can I reduce my spending?"</li>
+                                <li>"Am I on track with my budget?"</li>
+                                <li>"What's my biggest expense category?"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chatInput" placeholder="Ask me anything about your finances..." />
+                    <button id="sendChatBtn">
+                        <i class="ph ph-paper-plane-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Smart Tips Section -->
+            <div class="smart-tips-section">
+                <div class="section-header">
+                    <i class="ph ph-lightbulb"></i>
+                    <h3>Smart Financial Tips</h3>
+                    <span>Based on your spending habits</span>
+                </div>
+                <div class="tips-grid" id="smartTips">
+                    Loading personalized tips...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/ai-insights.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/theme.js"></script>
+</body>
+</html>

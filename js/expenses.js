@@ -1,3 +1,27 @@
+// ========== USER DATA MANAGEMENT ==========
+function getCurrentUserEmail() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser ? currentUser.email : null;
+}
+
+function saveUserExpenses(expensesData) {
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) return;
+    
+    const allExpenses = JSON.parse(localStorage.getItem('finflow_all_expenses')) || {};
+    allExpenses[userEmail] = expensesData;
+    localStorage.setItem('finflow_all_expenses', JSON.stringify(allExpenses));
+    localStorage.setItem('expenses', JSON.stringify(expensesData));
+}
+
+function loadUserExpenses() {
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) return [];
+    
+    const allExpenses = JSON.parse(localStorage.getItem('finflow_all_expenses')) || {};
+    return allExpenses[userEmail] || [];
+}
+
 // ========== THREE.JS ANIMATED BACKGROUND ==========
 const canvas = document.createElement('canvas');
 canvas.id = 'bg-canvas';
@@ -120,7 +144,6 @@ if (mobileToggle) {
     });
 }
 
-// Close sidebar when clicking outside on mobile
 document.addEventListener('click', (e) => {
     if (window.innerWidth <= 1024) {
         if (sidebar && !sidebar.contains(e.target) && mobileToggle && !mobileToggle.contains(e.target)) {
@@ -129,10 +152,89 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// ========== HEADER FUNCTIONALITY ==========
+const storedName = localStorage.getItem('userName') || 'User';
+const headerUserName = document.getElementById('headerUserName');
+const headerAvatar = document.getElementById('headerAvatar');
+
+if (headerUserName) headerUserName.textContent = storedName;
+if (headerAvatar) headerAvatar.textContent = storedName.charAt(0).toUpperCase();
+
+const sidebarUserName = document.querySelector('.user-name');
+const sidebarUserAvatar = document.getElementById('userAvatar');
+if (sidebarUserName) sidebarUserName.textContent = storedName;
+if (sidebarUserAvatar) sidebarUserAvatar.textContent = storedName.charAt(0).toUpperCase();
+
+// Date Range Selector
+const dateRangeBtn = document.getElementById('dateRangeBtn');
+const selectedRangeSpan = document.getElementById('selectedRange');
+
+if (dateRangeBtn) {
+    dateRangeBtn.addEventListener('click', () => {
+        Swal.fire({
+            title: 'Select Date Range',
+            html: `
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <button class="swal2-btn" data-range="Today" style="padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; cursor: pointer;">Today</button>
+                    <button class="swal2-btn" data-range="This Week" style="padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; cursor: pointer;">This Week</button>
+                    <button class="swal2-btn" data-range="This Month" style="padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; cursor: pointer;">This Month</button>
+                    <button class="swal2-btn" data-range="This Year" style="padding: 10px; background: #1e3a5f; color: white; border: none; border-radius: 8px; cursor: pointer;">This Year</button>
+                </div>
+            `,
+            showConfirmButton: false,
+            background: '#0a0e27',
+            color: '#fff',
+            didOpen: () => {
+                document.querySelectorAll('.swal2-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const range = btn.dataset.range;
+                        if (selectedRangeSpan) selectedRangeSpan.textContent = range;
+                        Swal.close();
+                        Swal.fire({
+                            icon: 'success',
+                            title: `${range} Selected`,
+                            timer: 1000,
+                            showConfirmButton: false,
+                            background: '#0a0e27',
+                            color: '#fff',
+                            iconColor: '#3b82f6'
+                        });
+                    });
+                });
+            }
+        });
+    });
+}
+
+// User menu click - go to profile
+const userMenuBtn = document.getElementById('userMenuBtn');
+if (userMenuBtn) {
+    userMenuBtn.addEventListener('click', () => {
+        window.location.href = 'profile.html';
+    });
+}
+
+// Search keyboard shortcut
+const searchInputField = document.getElementById('searchInput');
+if (searchInputField) {
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            searchInputField.focus();
+        }
+    });
+}
+
 // ========== EXPENSE MANAGEMENT LOGIC ==========
-let expenses = JSON.parse(localStorage.getItem('expenses')) || [
-    { id: 1, description: 'Sample Expense', amount: 50.00, category: 'Food & Dining', date: new Date().toISOString().split('T')[0] }
-];
+// Load expenses - NO SAMPLE EXPENSE
+let expenses = loadUserExpenses();
+
+// Only add sample expense for NEW users (empty expenses)
+if (expenses.length === 0) {
+    // For new users, start with empty array - no sample expense
+    expenses = [];
+    saveUserExpenses(expenses);
+}
 
 let editingExpenseId = null;
 
@@ -146,23 +248,6 @@ const modalTitle = document.getElementById('modalTitle');
 const submitBtn = document.getElementById('submitBtn');
 const searchInput = document.getElementById('searchInput');
 
-// Set user name from localStorage
-const userNameSpan = document.querySelector('.user-name');
-const userAvatar = document.getElementById('userAvatar');
-const userName = localStorage.getItem('userName');
-
-if (userNameSpan && userName) {
-    userNameSpan.textContent = userName;
-} else if (userNameSpan) {
-    userNameSpan.textContent = 'User';
-}
-
-if (userAvatar && userName) {
-    userAvatar.textContent = userName.charAt(0).toUpperCase();
-} else if (userAvatar) {
-    userAvatar.textContent = 'U';
-}
-
 // Check if user is logged in
 const isLoggedIn = localStorage.getItem('isLoggedIn');
 if (!isLoggedIn) {
@@ -170,7 +255,9 @@ if (!isLoggedIn) {
         icon: 'warning',
         title: 'Not Logged In',
         text: 'Please login to access your expenses',
-        confirmButtonColor: '#458FF6'
+        confirmButtonColor: '#1e3a5f',
+        background: '#0a0e27',
+        color: '#fff'
     }).then(() => {
         window.location.href = 'login.html';
     });
@@ -186,20 +273,26 @@ if (logoutBtn) {
             text: 'Are you sure you want to logout?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#ef4444',
-            cancelButtonColor: '#6b7280',
-            confirmButtonText: 'Yes, logout'
+            confirmButtonColor: '#1e3a5f',
+            cancelButtonColor: '#475569',
+            confirmButtonText: 'Yes, logout',
+            background: '#0a0e27',
+            color: '#fff'
         }).then((result) => {
             if (result.isConfirmed) {
                 localStorage.removeItem('isLoggedIn');
-                localStorage.removeItem('userEmail');
-                localStorage.removeItem('userName');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('expenses');
+                localStorage.removeItem('budgets');
                 Swal.fire({
                     icon: 'success',
                     title: 'Logged Out!',
                     text: 'Redirecting to login page...',
                     timer: 1500,
-                    showConfirmButton: false
+                    showConfirmButton: false,
+                    background: '#0a0e27',
+                    color: '#fff',
+                    iconColor: '#10b981'
                 }).then(() => {
                     window.location.href = 'login.html';
                 });
@@ -215,18 +308,14 @@ if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
 if (expenseForm) expenseForm.addEventListener('submit', handleSubmit);
 if (searchInput) searchInput.addEventListener('input', handleSearch);
 
-// Close modal when clicking outside
 if (modal) {
     modal.addEventListener('click', (e) => { 
         if (e.target === modal) closeModal(); 
     });
 }
 
-// Initial Render
 renderExpenses();
 updateTotals();
-
-// --- CORE FUNCTIONS ---
 
 function openAddModal() {
     editingExpenseId = null;
@@ -268,36 +357,58 @@ function handleSubmit(e) {
     if (editingExpenseId) {
         const index = expenses.findIndex(e => e.id === editingExpenseId);
         expenses[index] = { ...expenses[index], ...formData };
-        Swal.fire('Updated!', 'Your expense has been updated.', 'success');
+        Swal.fire({
+            icon: 'success',
+            title: 'Updated!',
+            text: 'Your expense has been updated.',
+            background: '#0a0e27',
+            color: '#fff',
+            iconColor: '#3b82f6'
+        });
     } else {
         const newExpense = { id: Date.now(), ...formData };
         expenses.unshift(newExpense);
-        Swal.fire('Added!', 'Your expense has been added.', 'success');
+        Swal.fire({
+            icon: 'success',
+            title: 'Added!',
+            text: 'Your expense has been added.',
+            background: '#0a0e27',
+            color: '#fff',
+            iconColor: '#3b82f6'
+        });
     }
 
-    saveExpenses();
+    saveUserExpenses(expenses);
     renderExpenses();
     updateTotals();
     closeModal();
 }
 
-// Global scope functions for HTML onclicks
 window.deleteExpense = function(id) {
     Swal.fire({
         title: 'Delete Expense?',
         text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#9ca3af',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: '#1e3a5f',
+        cancelButtonColor: '#475569',
+        confirmButtonText: 'Yes, delete it!',
+        background: '#0a0e27',
+        color: '#fff'
     }).then((result) => {
         if (result.isConfirmed) {
             expenses = expenses.filter(e => e.id !== id);
-            saveExpenses();
+            saveUserExpenses(expenses);
             renderExpenses();
             updateTotals();
-            Swal.fire('Deleted!', 'Your expense has been removed.', 'success');
+            Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Your expense has been removed.',
+                background: '#0a0e27',
+                color: '#fff',
+                iconColor: '#10b981'
+            });
         }
     });
 };
@@ -331,7 +442,7 @@ function renderExpenses(filteredExpenses = expenses) {
                         <i class="ph ph-trash"></i>
                     </button>
                 </div>
-             </td>
+              </td>
         </tr>
     `).join('');
 }
@@ -372,14 +483,10 @@ function handleSearch(e) {
     renderExpenses(filtered);
 }
 
-function saveExpenses() {
-    localStorage.setItem('expenses', JSON.stringify(expenses));
-}
-
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-console.log('Expenses page loaded with Three.js, Glass Morphism, and Mobile Responsiveness!');
+console.log('Expenses page loaded with no sample expense!');

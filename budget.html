@@ -1,15 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>Budget Management - FinFlow</title>
     <link rel="shortcut icon" href="finflow logo (1).png" />
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/budget.css" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
     <!-- Three.js Canvas Background -->
@@ -22,6 +22,7 @@
         <span></span>
     </div>
 
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="logo">
             <img src="finflow logo (1).png" alt="" />
@@ -30,86 +31,80 @@
 
         <nav class="nav-menu">
             <a href="dashboard.html" class="nav-item">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
-                    <rect x="11" y="3" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
-                    <rect x="3" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
-                    <rect x="11" y="11" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
-                </svg>
+                <i class="ph ph-squares-four"></i>
                 <span>Dashboard</span>
             </a>
-
             <a href="expenses.html" class="nav-item">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="4" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5" />
-                    <path d="M3 8H17" stroke="currentColor" stroke-width="1.5" />
-                    <path d="M7 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                </svg>
+                <i class="ph ph-receipt"></i>
                 <span>Expenses</span>
             </a>
-
             <a href="budget.html" class="nav-item active">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 10C4 9.44772 4.44772 9 5 9H15C15.5523 9 16 9.44772 16 10V15C16 15.5523 15.5523 16 15 16H5C4.44772 16 4 15.5523 4 15V10Z" stroke="currentColor" stroke-width="1.5" />
-                    <path d="M7 9V6C7 4.34315 8.34315 3 10 3V3C11.6569 3 13 4.34315 13 6V9" stroke="currentColor" stroke-width="1.5" />
-                </svg>
+                <i class="ph ph-wallet"></i>
                 <span>Budgets</span>
             </a>
-
             <a href="analytics.html" class="nav-item">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 16L7 12L10 15L17 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M17 12V8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+                <i class="ph ph-chart-line-up"></i>
                 <span>Analytics</span>
             </a>
-
-           <a href="#" class="nav-item">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 2L12.5 7.5L18 8.5L14 13L15 18.5L10 16L5 18.5L6 13L2 8.5L7.5 7.5L10 2Z" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          <span>AI Insights</span>
-        </a>
-
+            <a href="ai-insights.html" class="nav-item">
+                <i class="ph ph-sparkle"></i>
+                <span>AI Insights</span>
+            </a>
             <a href="profile.html" class="nav-item">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5" />
-                    <path d="M4 17C4 14 6.5 12 10 12C13.5 12 16 14 16 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                </svg>
+                <i class="ph ph-user"></i>
                 <span>Profile</span>
             </a>
         </nav>
 
         <a href="#" class="nav-item logout" id="logoutBtn">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 14L17 10L13 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M17 10H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                <path d="M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-            </svg>
+            <i class="ph ph-sign-out"></i>
             <span>Logout</span>
         </a>
     </aside>
 
+    <!-- Main Content -->
     <main class="main-content">
+        <!-- Header -->
         <header class="header">
             <div class="search-bar">
                 <i class="ph ph-magnifying-glass"></i>
                 <input type="text" id="searchInput" placeholder="Search budgets..." />
+                <span class="search-shortcut">⌘K</span>
             </div>
 
             <div class="header-right">
-                <div class="user-info">
+                <div class="date-range" id="dateRangeBtn">
+                    <i class="ph ph-calendar"></i>
+                    <span id="selectedRange">This Month</span>
+                    <i class="ph ph-caret-down"></i>
+                </div>
+
+                <div class="notification" id="notificationBtn" style="position:relative;cursor:pointer;">
+    <i class="ph ph-bell" style="font-size:20px;color:white;"></i>
+    <span class="notification-badge" id="notificationCount" style="position:absolute;top:-5px;right:-8px;background:#ef4444;color:white;font-size:10px;border-radius:50%;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;"></span>
+</div>
+<div class="notification-dropdown" id="notificationDropdown">
+    <div class="notification-header">
+        <h3>Notifications</h3>
+        <button class="mark-all-read" id="markAllReadBtn">Mark all read</button>
+    </div>
+    <div class="notifications-list" id="notificationsList"></div>
+</div>
+
+                <div class="user-info" id="userMenuBtn">
+                    <div class="user-avatar" id="userAvatarIcon">U</div>
                     <div class="user-text">
                         <span class="welcome-text">Welcome back,</span>
                         <span class="user-name" id="userDisplayName">User</span>
                     </div>
-                    <div class="user-avatar" id="userAvatarIcon">U</div>
+                    <i class="ph ph-caret-down"></i>
                 </div>
             </div>
         </header>
 
+        <!-- Budget Content -->
         <div class="budget-content">
-            <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 15px;">
+            <div class="page-header">
                 <div>
                     <h1>Budget Management</h1>
                     <p>Plan and track your spending across categories</p>
@@ -120,6 +115,7 @@
                 </button>
             </div>
 
+            <!-- Budget Summary Cards -->
             <div class="budget-summary">
                 <div class="budget-summary-item">
                     <span class="summary-label">Monthly Budget</span>
@@ -144,10 +140,12 @@
                 </div>
             </div>
 
+            <!-- Budget Grid -->
             <div class="budget-grid" id="budgetGrid"></div>
         </div>
     </main>
 
+    <!-- Add/Edit Budget Modal -->
     <div id="budgetModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -180,7 +178,8 @@
         </div>
     </div>
 
-    <script src="js/budget.js"></script><!-- Theme JS (shared) - Add BEFORE other page-specific JS -->
-<script src="js/theme.js"></script>
+    <script src="js/budget.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/notifications.js"></script>
 </body>
 </html>
